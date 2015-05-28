@@ -5,7 +5,9 @@ The pre-story can be found in http://forum.xda-developers.com/showthread.php?t=2
 and some very useful scripts can be found in https://github.com/x29a/nec_terrain_root.
 
 Current files:
+
 boot/ - boot kernel
+
 recovery/ - recovery kernel and the recovery binary
 
 In short: it is a great qwerty phone which is crazily locked from any known rooting attempt.
