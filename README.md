@@ -25,20 +25,20 @@ So, in principle, we have to hack the recovery password or try to force the reco
 
 Thanks to x29a I have extracted partitions smoothly. BTW, the relevant script get_partitions.sh at least on my box needs a microfix: numbers 1-9 should be 01-09. Anyway, the story is like that:
 
-1. There are two nice partitions: boot and recovery, numbers 9 and 11 respectively. Both are android bootables with a kernel, ramdisk and some garbadge (or maybe the place for passwords?). Oddly, kernel is not aligned at 2k as android prescribes but still things are extractable. Kernels are DIFFERENT, while sizes are identical, both things are for no obvious reason. The aligment offset of both kernels is the same though. It is 0x4899. Perhaps, these are not exactly kernels but rather some portions of partitions while the full story is more involved:
+0. There are two nice partitions: boot and recovery, numbers 9 and 11 respectively. Both are android bootables with a kernel, ramdisk and some garbadge (or maybe the place for passwords?). Oddly, kernel is not aligned at 2k as android prescribes but still things are extractable. Kernels are DIFFERENT, while sizes are identical, both things are for no obvious reason. The aligment offset of both kernels is the same though. It is 0x4899. Perhaps, these are not exactly kernels but rather some portions of partitions while the full story is more involved:
 
 I first found the gzip magics, one at 0x4899 and one way below. Then, following the standards, I said that the kernel 
 is the peace in between of the first and the second gzip magics. I gave this to gzip and it accepted to unzip saying that the trailing garbage is ignored.
 
 What is incredible, that the sizes of both kernels AFTER gunzip are identical. How come?
 
-2. I retrieved all files from both ramdisks. Structures of ramdisks are similar but the content is different. In particular the boot partition ramdisk has adbd in /sbin. recovery ramdisk has RECOVERY in ramdisk.
+1. I retrieved all files from both ramdisks. Structures of ramdisks are similar but the content is different. In particular the boot partition ramdisk has adbd in /sbin. recovery ramdisk has RECOVERY in ramdisk.
 
-3. I bet 200% that this RECOVERY program, /sbin/recovery, is responsible for requesting the maintenence password. 400%. It is there! BUT, it is binary (ARM ELF) where only strings of data are easily accessible (among these strings there are those which you exactly see in <3e> mode, that is why I bet with confidence).
+2. I bet 200% that this RECOVERY program, /sbin/recovery, is responsible for requesting the maintenence password. 400%. It is there! BUT, it is binary (ARM ELF) where only strings of data are easily accessible (among these strings there are those which you exactly see in <3e> mode, that is why I bet with confidence).
 
-4. This recovery file seems to be based on original recovery.c from google (https://android.googlesource.com/platform/bootable/recovery/+/fadc5ac81d6400ebdd041f7d4ea64021596d6b7d/recovery.c) but stuffed by NEC-API with the support of FOTA (firmware on the air) and this f***g password lock.
+3. This recovery file seems to be based on original recovery.c from google (https://android.googlesource.com/platform/bootable/recovery/+/fadc5ac81d6400ebdd041f7d4ea64021596d6b7d/recovery.c) but stuffed by NEC-API with the support of FOTA (firmware on the air) and this f***g password lock.
 
-5. At this stage we need a decent disassembler for ARMv7 with Krait cpu to understand: WHAT HAPPENS WHEN ONE PRESSES <OK>?
+4. At this stage we need a decent disassembler for ARMv7 with Krait cpu to understand: WHAT HAPPENS WHEN ONE PRESSES <OK>?
 
 The recovery binary is JUST 500k, the whole recovery partition is just 10M. The problem seems to be narrowed significantly.
 
