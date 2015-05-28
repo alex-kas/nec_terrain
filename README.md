@@ -72,3 +72,4 @@ If one can use kexec, then there are 2 possibilities:
 Another possible shot worth tryin is like that. If the recovery kernel releases the nand-lock then during the <3e> inital screen the nand is unlocked. If I reboot by using menu or button, it locks again, this I'm sure, but if I take off the battery ... Moreover, if the normal boot kernel does not check for this then I have the nand unlocked! ... TOOOOO many ifs but why not to try?
 
 Suggestions are welcome :)
+Also, perhaps, sharing images of boot and recovery partitions as well as the sndata.bin file for the simple comparison may shed light on the data of interest.
