@@ -1,15 +1,23 @@
 # nec_terrain
 Exploiting NEC Terrain mobile
 
-The pre-story can be found in http://forum.xda-developers.com/showthread.php?t=2515602 and some very useful scripts can be found in https://github.com/x29a/nec_terrain_root.
+The pre-story can be found in http://forum.xda-developers.com/showthread.php?t=2515602
+and some very useful scripts can be found in https://github.com/x29a/nec_terrain_root.
 
 Current files:
 boot/ - boot kernel
 recovery/ - recovery kernel and the recovery binary
 
-In short: it is a great qwerty phone which is crazily locked from any known rooting attempt. What is known so far is how to get temporary root at the user level, how to disable a lot of bloatware and how to pull the raw images of all internal partitions. The practicalities are collected in the x29a's github "nec_terrain_root".
+In short: it is a great qwerty phone which is crazily locked from any known rooting attempt.
+What is known so far is how to get temporary root at the user level, how to disable a lot of
+bloatware and how to pull the raw images of all internal partitions. The practicalities are
+collected in the x29a's github "nec_terrain_root".
 
-The main problem is that the phone is nand-locked, so no straight approch to replace the rom. However, as we can imagine, the phone itself allows recovery and upgrade possibilities. Those options MUST clear the nand-lock to accomplish the task. Oddly, entering the recovery mode (by switching on with the vol-down pressed) is not enough. The desired options of "sdcard recovery" and "maintanence" are locked by an unknown password. Neither NEC nor AT&T opens the cards.
+The main problem is that the phone is nand-locked, so no straight approch to replace the rom.
+However, as we can imagine, the phone itself allows recovery and upgrade possibilities.
+Those options MUST clear the nand-lock to accomplish the task. Oddly, entering the recovery mode
+(by switching on with the vol-down pressed) is not enough. The desired options of "sdcard recovery"
+and "maintanence" are locked by an unknown password. Neither NEC nor AT&T opens the cards.
 
 So, in principle, we have to hack the recovery password or try to force the recovery process bypassing the recovery utility developed for this phone. Below are my findings for the moment:
 
