@@ -1,75 +1,279 @@
 # nec_terrain
 Exploiting NEC Terrain mobile
 
+.
+
+.
+
+.
+
+Introduction and terroot
+
 The pre-story can be found in http://forum.xda-developers.com/showthread.php?t=2515602
-and some very useful scripts can be found in https://github.com/x29a/nec_terrain_root.
+and many useful scripts, links and the most important the rooting app can be found in https://github.com/x29a/nec_terrain_root.
+It is an easily traceable app which implements the method (my, in fact) outlined in
+http://forum.xda-developers.com/showpost.php?p=61542922&postcount=186 (also a bit before and all way down)
+
+A bit of info:
+
+Terminology:
+
+boot - normal boot via the image on the boot partition (number 9). The kernel in this image blocks rw access to the vital system areas, like system, boot, recovery, sbl1,2,3, aboot, rpm, tz.
+You cannot write there even if you are root.
+
+recovery - recovery boot (via vol-down+power) via the recovery partition (number 11). The kernel there is free of the write-blocks.
+
+In order to root the phone we need to place the su binary inside /system/bin (or /system/xbin) and the goal is to open it for write. Since even root cannot do it, the new goal is to modify the boot
+image where all mountings happen. But reflashing an image is not possible.
+
+So, the goal is to flash it to a new place and instruct the system about this. Out of the sudden the gpt table itself is NOT protected from writing.
+Moreover, the boot locker just a joke. It exists, it check certificates, hash, etc, but its ligic is like that:
+
+1. If I see a wrong image I boot it anyway.
+
+2. BUT I'll write one byte just inside my aboot image
+
+3. Next time, if I see this byte set, I boot whatever you like w/o verification
+
+4. ...
+
+Good for us, less work.
+
+In short the program, named terroot, does the following. Using the run_root_shell, which in turn uses a loop-hole in the kernel to achieve a temporary root,
+terroot remaps the recovery partition into another location. This location is writable under a temporary root and you can flash there any image.
+terroot in its present version flashes there an image composed of the following (recall that any boot image has 2 parts: kernel and init ramdisk to kick-off the system):
+
+1) recovery kernel, because it has no protection over system partitions
+
+2) boot ramdisk tinkered such that you get /system and / in rw modes and also a property att.service.entitlement is set to false so that you can tether.
+
+So at this stage you can do the following: boot as normal and have your normal system or boot as recovery and have a feeling of a normal system but w/o limits and with /system already rw.
+You still however, need to use run_root_shell to have a root environment. But now, using it you can place, say su binary into /system/bin
+
+To proceed with further steps you MUST run terroot at least once. It is essential to remap the recovery partition in another location. Alternatively you can do it by hands following the xda thread.
+
+What is next you may ask? What apart from root?
+
+One of the greatest problems of this phone is its partitioning. It has 800MB for userdata (where you install your programs) and 4.3GB for GROW (for your photos in fact).
+
+.
+
+.
+
+.
+
+
+Repartitioning userdata and GROW
+
+It is a straightforward but subtle thing. Mistakes may cost you a phone. My ideology is that you MUST create an isolated environment for this. Otherwise your phone may become a brick. Remember, it is a pc,
+you cannot boot from a flash and revert things.
+
+The current idea is to use recovery as the proper recovery and boot as the normal boot. So I assume that coming to this quest you have you Terrain with you which has undergo the terroot
+treatment at least once. Otherwise, go up, read, and do. Then return here.
+
 
 Current files:
 
-boot/ - boot kernel
+boot/ - good boot image, better, I think then currently terroot uses (I'm straight in phrasing here as the prebious image was also cooked by me, I think I have right to compare)
 
-recovery/ - recovery kernel and the recovery binary
+recovery/ - the proper recovery image
 
-In short: it is a great qwerty phone which is crazily locked from any known rooting attempt.
-What is known so far is how to get temporary root at the user level, how to disable a lot of
-bloatware and how to pull the raw images of all internal partitions. The practicalities are
-collected in the x29a's github "nec_terrain_root".
+First, we install new recovery (into its proper, i.e. recovery partition) You download all (3) files from the recovery folder into one folder on your pc. Check that run_root_shell 
+and adbr.sh have proper permissions 755.
 
-The main problem is that the phone is nand-locked, so no straight approch to replace the rom.
-However, as we can imagine, the phone itself allows recovery and upgrade possibilities.
-Those options MUST clear the nand-lock to accomplish the task. Oddly, entering the recovery mode
-(by switching on with the vol-down pressed) is not enough. The desired options of "sdcard recovery"
-and "maintanence" are locked by an unknown password. Neither NEC nor AT&T opens the cards.
+Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable and execute
 
-So, in principle, we have to hack the recovery password or try to force the recovery process bypassing the recovery utility developed for this phone. Below are my findings for the moment:
+./adbr.sh
 
-Thanks to x29a I have extracted partitions smoothly. BTW, the relevant script get_partitions.sh at least on my box needs a microfix: numbers 1-9 should be 01-09. Anyway, the story is like that:
+on your pc. As the result you will have a brand new recovery image to be booted with vol-down pressed.
 
-0. There are two nice partitions: boot and recovery, numbers 9 and 11 respectively. Both are android bootables with a kernel, ramdisk and some garbadge (or maybe the place for passwords?). Oddly, kernel is not aligned at 2k as android prescribes but still things are extractable. Kernels are DIFFERENT, while sizes are identical, both things are for no obvious reason. The aligment offset of both kernels is the same though. It is 0x4899. Perhaps, these are not exactly kernels but rather some portions of partitions while the full story is more involved:
+Well, you have lost an achievement of terroot and do not have a possibility to boot such that /system is rw. But wait, we are working now exactly for that but I guess in a safer way. So, let's go further.
 
-I first found the gzip magics, one at 0x4899 and one way below. Then, following the standards, I said that the kernel 
-is the peace in between of the first and the second gzip magics. I gave this to gzip and it accepted to unzip saying that the trailing garbage is ignored.
+.
 
-What is incredible, that the sizes of both kernels AFTER gunzip are identical. How come?
+You might want to get a very new phone (aka factory reset) or just update yours. If you do NOT want to reset, be ready to have a BIG miscro-sd card which will hold all your data. while we repartition the phone.
+Your microsd card must be be formatted such that it has an mbr and a partition. It is usually like that nowadays but if not, change it to have an mbr.
+In other words this card in linux on a pc should be seen as /dev/mmcblk0 and its partition as /dev/mmcblk0p1. If you do not see the later, create mbr and a partition anew.
 
-1. I retrieved all files from both ramdisks. Structures of ramdisks are similar but the content is different. In particular the boot partition ramdisk has adbd in /sbin. recovery ramdisk has RECOVERY in ramdisk.
+Now boot into the recovery image and see tiny (sorry) text instead of an ANDRO-logo. You can use adb now! and you MUST!
 
-2. I bet 200% that this RECOVERY program, /sbin/recovery, is responsible for requesting the maintenence password. 400%. It is there! BUT, it is binary (ARM ELF) where only strings of data are easily accessible (among these strings there are those which you exactly see in <3e> mode, that is why I bet with confidence).
+adb shell
 
-3. This recovery file seems to be based on original recovery.c from google (https://android.googlesource.com/platform/bootable/recovery/+/fadc5ac81d6400ebdd041f7d4ea64021596d6b7d/recovery.c) but stuffed by NEC-API with the support of FOTA (firmware on the air) and this f***g password lock.
+It is immediately root.
 
-4. At this stage we need a decent disassembler for ARMv7 with Krait cpu to understand: WHAT HAPPENS WHEN ONE PRESSES <OK>?
+BE CAREFUL!!! IT IS THE PROPER ROOT!!! NO LIMITS!!!
 
-The recovery binary is JUST 500k, the whole recovery partition is just 10M. The problem seems to be narrowed significantly.
+You have busybox (with all links), gdisk, sgdik and mksh in /sbin folder. It is a good linux recovery set of tools. Also you have some scripts in /rbin.
+/rbin is NOT in your path so you will not run scripts from there unintentionally.
 
-Theories:
-1. The password is hardcoded in the binary. But then it should appear somehow either in .data or in .rodata sections of ELF. From the first look it is NOT there, but who knows for sure?
+Go into /rbin
 
-2. The password is in a separate file but the only strange reference is for /cache/trace/sndata.bin (BTW, cache is one more partition among sevral mounted from /etc/recovery.fstab, it is just ext4). In general this cache partition has some logs, also about previous installs. The file sndata.bin is there, it is 15 bytes, semi-binary, but its creation date was as the date I have copied my phone partitions. Not sure it is the true place, and how one would convert 14 bytes to 10 digits? Again a problem, if it is here, but other level of difficulty (simpler).
+cd /rbin
 
-3. The password is hardcoded in the ramdisk at a specific location and is read by direct disk access method. For this one should be common with arm architecture a bit deeper than a newby.
+scripts are for you and the ARE dangerous. So, follow instruction.
 
-4. The password is hardcoded somewhere else, and again is read by the direct disk access techinque.
+bu_... scripts backup your files to your sdcard (hope, you put it in vefore :) )
 
-5. None of the above: then ...
+rr_... scripts restore your files from backup
 
-Some hints:
+flash_... scripts flash (see below what exactly)
 
-1. In <3e> mode you can WIPE the cache partition. WITHOUT any password. I wiped mine! Surpirsingly, I observe all files I saw there before including the sndata.bin. Its timestamp has been renewed. Moreover, its content is the same.
+.
 
-2. The portions of boot and recovery partitions before kernels are very similar but NOT the same. This in principle may be a place for a password.
+OPTION 1. NO FACTORY RESET
 
-The main problem now is at least to identify the place in the binary where the recovery program starts working out the password input.
+run
 
-Interesting move has been suggested by user rpadula at xda-developers thread. Try to use KEXEC. It is not known whether we can do so using the temporary root, because the root itself is not enough. The kernel must be comiled such that is allows kexec call.
+./bu_data.sh
 
-If one can use kexec, then there are 2 possibilities:
+now you have all files from userdata and from GROW on your sdcard in a very fixed folder. Run gdisk, simply
 
-1. If the nand-lock is released by the recovery kernel, then we take as the kernel the recovery kernel and the recovery ramdisk image modified via replacing the NEC's recovery by a normal recovery.
+gdisk
 
-2. If the nand-lock is released by the recovery utility itself just before the actual update, than we need its password, again.
- 
-Another possible shot worth tryin is like that. If the recovery kernel releases the nand-lock then during the <3e> inital screen the nand is unlocked. If I reboot by using menu or button, it locks again, this I'm sure, but if I take off the battery ... Moreover, if the normal boot kernel does not check for this then I have the nand unlocked! ... TOOOOO many ifs but why not to try?
+since /sbin is in your PATH.
 
-Suggestions are welcome :)
-Also, perhaps, sharing images of boot and recovery partitions as well as the sndata.bin file for the simple comparison may shed light on the data of interest.
+Unfortunately, I cannot provide you help here as is solely up to you HOW you want to breakdown partitions. Just for reference, originally the partitions of interest reside as
+
+  13         2818048         4456447   800.0 MiB   8300  userdata
+
+  14         4456448        13565951   4.3 GiB     FFFF  GROW
+
+where start and end are in 512-byte-sectors. I did them like
+
+  13         2818048        13303807   5.0 GiB     8300  userdata
+
+  14        13303808        13565951   128.0 MiB   FFFF  GROW
+
+You achieve this in gdisk by deleting a partition and recreating it again with new boundaries. Remember to put proper flag (8300 or FFFF as before).
+
+Once created AND WRITTEN, do not forget the command w to write your changes, you MUST reboot. it is the only way to instruct the kernel to read new partition table. Do it via
+
+adb reboot recovery 
+
+from your PC!!!
+
+.
+
+After the reboot again do
+
+adb shell
+
+you are back to your phone which has new partition layout but NO filesystems on those altered partitions. For GROW simply issue
+
+mkfs.vfat /dev/block/mmcblk0p14
+
+inside your phone, of course.
+
+userdata needs more efforts. There are 2 ways to format it: use the stock recovery program which is there, or create a file-system on your pc.
+
+Using recovery: start it by pressing vol-up then col-down on your phone. find the item "factory reset" and choose yes. This in fact does not reset anything but just formats userdata.
+However, it also formats the partition number 31. It does not reboot after, so just continue to "restoring files".
+
+You may see an error about llseek (95). Ignore it and read my posts on xda thread about if you wish.
+
+!!!Technically all user installed programs are in userdata. I have no clue whether it is essential or not, this 31st partition. I have not traced its usage during the normal operation.
+If you believe that formatting that partition will make a reset effect on reboot, do not use the recovery-program method!!!
+
+Other way is to create the filesystem on your pc, so go there. create a file
+
+dd if=/dev/zero of=your-file bs=512 count=EXACT
+
+where EXACT=(end sector of your userdata partition - first sector of userdata partition +1) Now do
+
+sudo mkfs.ext4 your-file
+
+gzip -9 your-file
+
+adb push your-file.gz /tmp
+
+return into your phone and do
+
+cd /tmp
+
+gzip -c your-file.gz | dd of=/dev/block/mmcblk0p13
+
+WAIT ABOUT 20 MIN if your partition is 5GB, do not worry.
+
+.
+
+Restoring files
+
+Now restore your files using
+
+cd /rbin
+
+./rr_data.sh
+
+Now all your files unpacked pack, like nothing have happened! The recovery program is still active: you can choose the reboot option there or say on your pc
+
+adb reboot
+
+.
+
+.
+
+FLASHING BETTER BOOT IMAGE
+
+Since you are now booted inside your normal environment, choose your way to place the boot image and build.prop files from the /boot folder here on your sdcard EXACTLY in the folder
+brnects0.715
+
+cp kas.boot.bin build.prop /path/to/your/sdcard/brnects0.715
+
+Be sure your sdcard in your phone now and issue on your pc
+
+adb reboot recovery
+
+It is just simpler than holding vol-down button :) go inside your phone 
+
+adb shell
+
+and then do
+
+cd /rbin
+
+./flash_boot.sh
+
+This will first copy your present boot image under the name boot.bin in brnects0.715 folder on your sdcard and then flash kas.boot.bin in place
+
+One more thing to tinker NOW, still on your phone:
+
+mount /dev/block/mmcblk0p12 /system
+
+mount /dev/block/mmcblk1p1 /mnt/extsd
+
+cd /system
+
+cp /mnt/extsd/brnects0.715/build.prop .
+
+chmod 644 build.prop
+
+cd /
+
+umount /system
+
+umount /mnt/extsd
+
+Now your new image and some additional properties are in place: What exactly is different here compared to stock:
+
+1. This image is composed of the kernel taken from recovery and a ramdisk taken from the stock image and altered
+
+2. ro.secure=0 in the ramdisk
+
+3. in init.rc file which guides the init process bootanimation and debuggerd services are disabled
+
+4. also in the build.prop file which we placed additionally in /system att.service.entitlement=false (so you can tether) and service.adb.root=1 is set. Not sure that latter is essential.
+
+.
+
+.
+
+OUTLOOK
+
+Naturally, this recovery can be used to tinker the system, it is independent. Even if you mess up, you can restore everything. All tools are there and even extra can be uploaded
+using adb. This way you can put su binary inside /system/bin. I'll put instructions later.
+
+.
+
+.
+
+To be continued
