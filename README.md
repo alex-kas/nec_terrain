@@ -1,13 +1,7 @@
-# nec_terrain
-Exploiting NEC Terrain mobile
+# Exploiting NEC Terrain mobile
 
-.
 
-.
-
-.
-
-Introduction and terroot
+# Introduction and terroot
 
 The pre-story can be found in http://forum.xda-developers.com/showthread.php?t=2515602
 and many useful scripts, links and the most important the rooting app can be found in https://github.com/x29a/nec_terrain_root.
@@ -56,14 +50,8 @@ What is next you may ask? What apart from root?
 
 One of the greatest problems of this phone is its partitioning. It has 800MB for userdata (where you install your programs) and 4.3GB for GROW (for your photos in fact).
 
-.
 
-.
-
-.
-
-
-Repartitioning userdata and GROW
+# Repartitioning userdata and GROW
 
 It is a straightforward but subtle thing. Mistakes may cost you a phone. My ideology is that you MUST create an isolated environment for this. Otherwise your phone may become a brick. Remember, it is a pc,
 you cannot boot from a flash and revert things.
@@ -208,11 +196,7 @@ Now all your files unpacked pack, like nothing have happened! The recovery progr
 
 adb reboot
 
-.
-
-.
-
-FLASHING BETTER BOOT IMAGE
+# FLASHING BETTER BOOT IMAGE
 
 Since you are now booted inside your normal environment, choose your way to place the boot image and build.prop files from the /boot folder here on your sdcard EXACTLY in the folder
 brnects0.715
@@ -263,17 +247,11 @@ Now your new image and some additional properties are in place: What exactly is 
 
 4. also in the build.prop file which we placed additionally in /system att.service.entitlement=false (so you can tether) and service.adb.root=1 is set. Not sure that latter is essential.
 
-.
 
-.
-
-OUTLOOK
+# OUTLOOK
 
 Naturally, this recovery can be used to tinker the system, it is independent. Even if you mess up, you can restore everything. All tools are there and even extra can be uploaded
 using adb. This way you can put su binary inside /system/bin. I'll put instructions later.
 
-.
 
-.
-
-To be continued
+## To be continued
