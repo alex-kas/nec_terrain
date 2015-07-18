@@ -59,21 +59,19 @@ you have great chances not too boot anymore.
 
 I therefore promote an idea of an independent self-consistent recovery image which is capable to revert any crazy changes you could have made to your phone. Moreover
 this is essential to a re-partitioning which is a crucial issue. Originally you have in your partition table:
-
-``
+```
 * 13      2818048      4456447       819200KiB (  800.00MiB) userdata
 * 14      4456448     13565951      4554752KiB ( 4448.00MiB) GROW
-``
-
+```
 This essentially means almost no space for your programs and more than 4GiB just for photos, video, etc.
 
 
 To implement this idea you should flash some proper recovery image into its place. You can do it after you have run **terroot** at least once. Because
 essentially you need to re-map the recovery partition to another location, and **terroot** does this. Also you can do it by hands using `gdisk`.
 
-*You may ask me: but this eliminates the main effort of **terroot** - possibility to boot into an environment where `/system` can be done `rw`. Why to we need this?*
+*You may ask me: but this eliminates the main effort of __terroot__ - possibility to boot into an environment where `/system` can be done `rw`. Why to we need this?*
 
-*You need this if you want one of the following: repartition - you just should **not** do it on a live system or for the sake of security - with such a recovery
+*You need this if you want one of the following: repartition - you just should __not__ do it on a live system or for the sake of security - with such a recovery
 you will restore your system from almost any mess. Of course, once a superior recovery is in place we will flash a good image to the boot partition so that booting normally you
 get rooted and submissive system.*
 
@@ -89,15 +87,13 @@ To install new recovery into its proper place, i.e. recovery partition, You down
 and `adbr.sh` have proper permissions `755`.
 
 Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable and execute on your pc (you should be inside the folder where you have just downloaded the stuff)
-
-``
+```
 ./adbr.sh
-``
-
+```
 *If it complains, this means that perhaps you have not started `adb` before. Or maybe you have to use root to start it? On my pc I must initiate `adb` using*
-``
+```
 sudo adb devices
-``
+```
 *also check cables :)*
 
 As the result you will have a brand new recovery image to be booted with *vol-down+power* pressed.
@@ -127,10 +123,9 @@ Boot into the new recovery with *vol-down+power* pressed. On the phone you will 
 adb shell
 ``
 and you see the root shell prompt
-
-``
+```
 /#
-``
+```
 Availability of adb is the most serious achievement of this new recovery.
 
 Remember: It is immediately root.
@@ -150,50 +145,48 @@ some essential scripts in `/rbin`.
 Skip it if you do not care neither about your files nor about settings or programs installed by you and (therefore) want an effect of *factory reset*
 
 If you care about something of the above - do backup. It is as follows (commands inside the adb shell)
-``
+```
 cd /rbin
 ./bu_data.sh
-
-``
+```
 You will see a long output listing each file added to an archive on your sdcard in a very special folder `brnect08.715`
 
 ##### Step 2. Actual re-partitioning
 
 For this just run
-``
+```
 gdisk
-``
+```
 
 Unfortunately, I cannot provide you help here as it is solely up to you HOW you want to breakdown partitions. Just for reference, originally the partitions of interest reside as
-
+```
 *  13         2818048         4456447   800.0 MiB   8300  userdata
 *  14         4456448        13565951   4.3 GiB     FFFF  GROW
-
+```
 where start and end are in 512-byte-sectors. I did them like
-
+```
 *  13         2818048        13303807   5.0 GiB     8300  userdata
 *  14        13303808        13565951   128.0 MiB   FFFF  GROW
-
+```
 You achieve this in `gdisk` by deleting a partition and recreating it again with new boundaries. Remember to put proper flag (8300 or FFFF as it was before).
 
 Once created AND WRITTEN by issuing the command `w` INSIDE `gdisk`, you MUST reboot. It is the only way to instruct the kernel to read new partition table. Do it from your pc via
-``
+```
 adb reboot recovery 
-``
+```
 After the reboot you are back to the recovery environment.
 
 ##### Step 3. Formatting
 
 Go into the shell by typing on your pc
-
-``
+```
 adb shell 
-``
+```
 Now you MUST create file-systems on your re-shuffled partitions (command inside the adb shell)
-``
+```
 mkfs.vfat /dev/block/mmcblk0p14
 mkfs.ext4 /dev/block/mmcblk0p13
-``
+```
 
 After this you will have a system *EXACTLY* like after a stock factory reset. Note, stock factory reset just simple erases ALL on userdata and GROW partitions. Nothing more.
 
@@ -207,19 +200,19 @@ unless you ask someone to provide you one.*
 Skip it if already skipped the step 1 or if you have changed your mind and want a factory reset phone.
 
 To restore your files issue inside the adb shell
-``
+```
 cd /rbin
 ./rr_data.sh
-``
+```
 This will unpack all your files from the backup into the previous place like nothing have happened!
 The recovery program is still active: you can press *vol-up* and then *vol-down* to activate it, then choose the reboot option there. Or simply exit the shell
-``
+```
 exit
-``
+```
 and then type on your pc
-``
+```
 adb reboot
-``
+```
 After the reboot you either have your previous phone or will have to re-do all the initialization. This depends on whether you have backed-up files and restored them back or not.
 
 So to say: **DONE!**
@@ -233,21 +226,21 @@ You see, the nice *read-writable* image has gone. We need to make an alternative
 To install new boot into its proper place, i.e. boot partition, you download all (3) files from the `boot/` folder here to some place on your pc. Check that `adbb.sh` has `755` permissions.
 Your phone must be booted normally.
 Run on your pc (you are inside the directory where you downloaded the files)
-``
+```
 ./adbb.sh
-``
+```
 To copy files to a proper location on your sdcard (folder named `brnects0.715`), which must be in the phone. Now restart your phone into recovery using
-``
+```
 adb reboot recovery
-``
+```
 Now inside the shell do
-``
+```
 cd /rbin
 ./flash_boot.sh
-``
+```
 It will copy the current image to sdcard under the name `brnects0.715/boot.current.bin` and flash `kas.boot.bin` into place. On top of this we have to update `build.prop` file.
 I suggest doing all by hands, even though I can write a script. But it may happen you want to see how to do this in order to do another tinkering next time
-``
+```
 mount /dev/block/mmcblk0p12 /system
 mount /dev/block/mmcblk1p1 /sdcard
 cd /system
@@ -256,21 +249,20 @@ chmod 644 build.prop
 cd /
 umount /system
 umount /sdcard
-
-``
+```
 Comments: mind the final dot `.` in the `cp` command; do not forget to unmount mounted partitions using `umount` like here.
 This way you can do **whatever** with your system folder.
 
 A believe it is much safer and less stressful then on a live system.
 
 Now
-``
+```
 exit
-``
+```
 to come back to your pc and
-``
+```
 reboot
-``
+```
 **DONE!**
 
 
