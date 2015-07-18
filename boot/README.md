@@ -10,17 +10,19 @@ enforce a write-protection above linux permissions and privileges.
 
 #### Changelog:
 
-* version 0.8 (the very first)
+* **version 0.8** (the very first!)
   * kernel from the stock recovery  
   * ramdisk/default.prop: ro.secure=0, no obvious use
-  * build.prop
-    * att.service.entitlement=false for tethering
-    * service.adb.root=1, no obvious use
-  * init.rc
+  * ramdisk/init.rc
     * All mtd@xxx attempts removed
     * e2fsck enforced on `/system` (partition 12) as it can be writable now
     * `noauto_da_alloc` removed on mounting /system
     * All ext4 partitions are mounted with `noatime,nodiratime,discard` instead of `relatime`
-  * ramdisk/init.target.rc: `/tombstones` (partition 17) is now mounted with `noatime,nodiratime,discard` instead of `relatime` in 
+  * ramdisk/init.target.rc: `/tombstones` (partition 17) is now mounted with `noatime,nodiratime,discard` instead of `relatime`
+  * /system/build.prop
+    * att.service.entitlement=false for tethering
+    * service.adb.root=1, no obvious use
+  * **negative**: setting ro.debuggable=1 in ramdisk/default.prop leads to starting 2 additional services from ramdisk/init.rc **discarded**
+  * **negative**: setting ro.build.type=eng in /system/build.prop leads to flashing red border during the phone operation. **discarded**
 
-* version -1 (stock)
+* **version -1** (stock)
