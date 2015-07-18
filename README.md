@@ -53,7 +53,7 @@ You still however, need to use `run_root_shell` to have a root environment. But 
 ### Another concept
 
 The just presented concept lacks an independent recovery because any start eventually depends on `/system` which is unique. This means that if you mess up `/system` directory
-you have great chances not too boot anymore.
+you have great chances not to boot anymore.
 
 *Note that the original recovery lacks of ability to restore `/system` either. Stock recovery presumes your `/system` could not be modified*
 
@@ -170,9 +170,25 @@ where start and end are in 512-byte-sectors. I did them like
    13         2818048        13303807   5.0 GiB     8300  userdata
    14        13303808        13565951   128.0 MiB   FFFF  GROW
 ```
-You achieve this in `gdisk` by deleting a partition and recreating it again with new boundaries. Remember to put proper flag (8300 or FFFF as it was before).
+You achieve this in `gdisk` by deleting a partition and recreating it again with new boundaries.
 
-Once created AND WRITTEN by issuing the command `w` INSIDE `gdisk`, you MUST reboot. It is the only way to instruct the kernel to read new partition table. Do it from your pc via
+Tiny `gdisk` intro:
+
+All modifications are in MEMORY! It is safe, but DO NOT FORGET TO WRITE, using command **w** before you quit.
+
+* **?** - anytime for help
+* **d** - delete partition, it asks number: enter number and press `enter`
+* **n** - create new partition, it asks number. If say, you deleted partition number 14, you now can enter 14, so you will just redo it, but of another size. Then starting and ending sectors are asked. You can just get from the table above. OR invent YOURS! As you like. Then it asks about a flag, agree to 8300, even for GROW
+* **c** - CRUCIAL: you **MUST** give it a name as it was before, **EXACTLY**. Before entering the name you will be asked the partition number, of course
+* **p** - print, how the table looks now
+* **w** - write changes to disk, w/o this you will loose your efforts!
+* **q** -- quit
+
+Once created AND WRITTEN by issuing the command `w` INSIDE `gdisk` you must change the flag of partition 14. Not sure this is critical but better do it:
+```
+sgdisk -t 14:FFFF /dev/block/mmcblk0 -v
+```
+Now you MUST reboot. It is the only way to instruct the kernel to read new partition table. Do it from your pc via
 ```
 adb reboot recovery 
 ```
