@@ -60,8 +60,8 @@ you have great chances not too boot anymore.
 I therefore promote an idea of an independent self-consistent recovery image which is capable to revert any crazy changes you could have made to your phone. Moreover
 this is essential to a re-partitioning which is a crucial issue. Originally you have in your partition table:
 ```
-* 13      2818048      4456447       819200KiB (  800.00MiB) userdata
-* 14      4456448     13565951      4554752KiB ( 4448.00MiB) GROW
+   13      2818048      4456447       819200KiB (  800.00MiB) userdata
+   14      4456448     13565951      4554752KiB ( 4448.00MiB) GROW
 ```
 This essentially means almost no space for your programs and more than 4GiB just for photos, video, etc.
 
@@ -110,12 +110,14 @@ This is why we sacrifice the simplicity of **terroot**.
 Re-partitioning  is a straightforward but a *must-to-be-done-accurate* procedure. Mistakes may cost you a phone.
 
 ---
+
 Before turning on your phone: you must have an sd-card IN it.
 
 If you plan a backup (see below), prepare a BIG miscro-sd card which will hold all your data from userdata and GROW partitions. Originally they total to 5GiB but actual files may use less.
 
 *Your microsd card MUST be formatted such that it has an `mbr` and a partition. It is usually like that nowadays but if not, change it to have an `mbr`.
 In other words this card in a pc linux should be seen as `/dev/mmcblk0` and its partition as `/dev/mmcblk0p1`. If you do not see the later, create `mbr` and a partition anew on your pc.*
+
 ---
 
 Boot into the new recovery with *vol-down+power* pressed. On the phone you will see tiny (sorry) green text proving that things have really changed. Do on your pc
@@ -160,13 +162,13 @@ gdisk
 
 Unfortunately, I cannot provide you help here as it is solely up to you HOW you want to breakdown partitions. Just for reference, originally the partitions of interest reside as
 ```
-*  13         2818048         4456447   800.0 MiB   8300  userdata
-*  14         4456448        13565951   4.3 GiB     FFFF  GROW
+   13         2818048         4456447   800.0 MiB   8300  userdata
+   14         4456448        13565951   4.3 GiB     FFFF  GROW
 ```
 where start and end are in 512-byte-sectors. I did them like
 ```
-*  13         2818048        13303807   5.0 GiB     8300  userdata
-*  14        13303808        13565951   128.0 MiB   FFFF  GROW
+   13         2818048        13303807   5.0 GiB     8300  userdata
+   14        13303808        13565951   128.0 MiB   FFFF  GROW
 ```
 You achieve this in `gdisk` by deleting a partition and recreating it again with new boundaries. Remember to put proper flag (8300 or FFFF as it was before).
 
