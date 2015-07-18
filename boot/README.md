@@ -11,14 +11,16 @@ enforce a write-protection above linux permissions and privileges.
 #### Changelog:
 
 * version 0.8 (the very first)
-  * ro.secure=0 in the ramdisk/default.prop, no obvious use
-  
-  * att.service.entitlement=false in build.prop for tethering
-  * service.adb.root=1 in build.prop, no obvious use
-  
-  * All mtd@xxx attempts removed in ramdisk/init.rc
-  * e2fsck enforced on `/system` (partition 12) as it can be writable now
-  * `noauto_da_alloc` removed on mounting /system
-  * All ext4 partitions are mounted with `noatime,nodiratime,discard` instead of `relatime`
-  * `/tombstones` (partition 17) is now mounted with `noatime,nodiratime,discard` instead of
-  `relatime` in ramdisk/init.target.rc
+  * kernel from the stock recovery  
+  * ramdisk/default.prop: ro.secure=0, no obvious use
+  * build.prop
+    * att.service.entitlement=false for tethering
+    * service.adb.root=1, no obvious use
+  * init.rc
+    * All mtd@xxx attempts removed
+    * e2fsck enforced on `/system` (partition 12) as it can be writable now
+    * `noauto_da_alloc` removed on mounting /system
+    * All ext4 partitions are mounted with `noatime,nodiratime,discard` instead of `relatime`
+  * ramdisk/init.target.rc: `/tombstones` (partition 17) is now mounted with `noatime,nodiratime,discard` instead of `relatime` in 
+
+* version -1 (stock)
