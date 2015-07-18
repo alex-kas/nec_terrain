@@ -251,13 +251,17 @@ To copy files to a proper location on your sdcard (folder named `brnects0.715`),
 ```
 adb reboot recovery
 ```
-Now inside the shell do
+Now go into shell
+```
+adb shell
+```
+and do inside the shell
 ```
 cd /rbin
 ./flash_boot.sh
 ```
-It will copy the current image to sdcard under the name `brnects0.715/boot.current.bin` and flash `kas.boot.bin` into place. On top of this we have to update `build.prop` file.
-I suggest doing all by hands, even though I can write a script. But it may happen you want to see how to do this in order to do another tinkering next time
+It will copy the current boot image to sdcard under the name `brnects0.715/boot.current.bin` and flash `kas.boot.bin` into place. On top of this we have to update `build.prop` file.
+I suggest doing all by hands, even though I can write a script. But it may happen you want to see how to do this in order to do another tinkering next time w/o a help
 ```
 mount /dev/block/mmcblk0p12 /system
 mount /dev/block/mmcblk1p1 /sdcard
@@ -268,8 +272,9 @@ cd /
 umount /system
 umount /sdcard
 ```
-Comments: mind the final dot `.` in the `cp` command; do not forget to unmount mounted partitions using `umount` like here.
-This way you can do **whatever** with your system folder.
+Comments: you first mount the actyal system to the folder `/system`; then sdcard to the folder `/sdcard`; then you go inside of the system via `cd` and copy the `build.prop` file from sd card there (mind the final dot `.` in the `cp` command, it means the folder where you are *now*); then you change permission for `build.prop`; quit to the root folder `/`; and finally unmount mounted partitions using `umount`. The later step ensures all data which could be in cache are really written
+
+This is *the* way you should do **whatever** with your system next time.
 
 A believe it is much safer and less stressful then on a live system.
 
@@ -279,10 +284,11 @@ exit
 ```
 to come back to your pc and
 ```
-reboot
+adb reboot
 ```
 **DONE!**
 
+A believe all of that is much safer and less stressful then on a live system.
 
 #### Troubleshooting
 
