@@ -26,7 +26,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
 * syncing with google account does not produce errors
 * etc
 
-#### Apps from the stock rom which I left and why (raw list of packages in `ensys.txt`)
+#### Apps from the stock rom which I left and why (raw list of packages in `apkensys`)
 
 * android=/system/framework/framework-res.apk
 
@@ -170,7 +170,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
 
   Perhaps crappy and replacable but for me enough for the moment
 
-#### Apps from the stock rom which I **disabled** and why (raw list of packages in `dissys.txt`)
+#### Apps from the stock rom which I **disabled** and why (raw list of packages in `apkdissys`)
 
 * borqs.soundrecorder=/system/app/SoundRecorder.apk
 
@@ -402,7 +402,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
 
   **unknown**, but perhaps used by other borqs stuff, removed w/o issues
   
-#### Apps which I **put to replace to improve** the stock, which and why (raw list of packages in `3en.txt`)
+#### Apps which I **put to replace to improve** the stock, which and why (raw list of packages in `apken3`)
 
 * be.irm.kmi.meteo=/data/app/be.irm.kmi.meteo-1.apk
 
