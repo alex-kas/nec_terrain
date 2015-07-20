@@ -26,7 +26,9 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
 * all expected programs autostart
 * etc
 
-#### Apps from the stock rom which I left and why (raw list of packages in `apkensys`)
+*`enable` and `disable` lists together have absolutely __all__ packages which are initially in the system*
+
+#### Apps from the stock rom which I left and why, aka `enable` list (raw list of packages in `apkensys`)
 
 * android=/system/framework/framework-res.apk
 
@@ -209,11 +211,13 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
 
   Perhaps crappy and replaceable but for me enough for the moment
 
+#### App strangely not from the stock rom which **MUST** be there. Do not know why it is absent originally (also listed in `apkensys`)
+
 * com.koushikdutta.superuser=/system/app/Superuser.apk
 
   *SUperuser, I need. Of course, it was __not__ in stock, but I put it before in the rom by hands*
 
-#### Apps from the stock rom which I **disabled** and why (raw list of packages in `apkdissys`)
+#### Apps from the stock rom which I **disabled** and why, aka `disable` list (raw list of packages in `apkdissys`)
 
 * borqs.soundrecorder=/system/app/SoundRecorder.apk
 
@@ -241,7 +245,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.android.browser=/system/app/Browser.apk
 
-  Stock crappy browser
+  Stock crappy browser, there is firefox
   
 * com.android.calculator2=/system/app/Calculator.apk
 
@@ -265,7 +269,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.android.email=/system/app/Email.apk
 
-  Annoying stock e-mail
+  Annoying stock e-mail, there is K-9
   
 * com.android.facelock=/system/app/FaceLock.apk
 
@@ -321,7 +325,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.android.providers.partnerbookmarks=/system/app/PartnerBookmarksProvider.apk
 
-  **unknown** but seems to be sam advert, removed w/o issues
+  **unknown** but seems to be some advert, removed w/o issues
   
 * com.android.providers.userdictionary=/system/app/UserDictionaryProvider.apk
 
@@ -333,7 +337,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.android.voicedialer=/system/app/VoiceDialer.apk
 
-  Stock voice-dialer, not for me
+  Stock voice-dialer, i.e. giving the contact to call by voice, not for me
   
 * com.android.wallpaper=/system/app/LiveWallpapers.apk
 
@@ -349,7 +353,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.att.eptt=/system/app/EPTTVPL.apk
 
-  In particular *eptt* said in my native language means kind of "mother f&#ker", and it is. Some functionality to use some att service, I'm in Europe
+  In particular *eptt* pronounced in my native language means kind of "mother f&#ker", and it is. Some functionality to use some att service, I'm in Europe
   
 * com.att.myWireless=/system/app/myATT_VPL_v5.apk
 
@@ -437,11 +441,11 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.google.android.gm=/system/app/Gmail.apk
 
-  Not for me
+  gmail, Not for me, there is K-9
   
 * com.google.android.googlequicksearchbox=/system/app/GoogleQuickSearchBox.apk
 
-  Search widget on your screen
+  Search widget on your screen, I search in firefox
   
 * com.google.android.marvin.talkback=/system/app/talkback.apk
 
@@ -461,7 +465,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.google.android.syncadapters.calendar=/system/app/GoogleCalendarSyncAdapter.apk
 
-  synchronize your calendar with google, but I do not use google so much
+  synchronize your stock calendar with google, but I do not use the stock calendar
   
 * com.google.android.tts=/system/app/GoogleTTS.apk
 
@@ -493,7 +497,7 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.qo.android.sp.oem=/system/app/Quickoffice_Casio_SP_5.0.114_EC.apk
 
-  Quick office discontinued, there are alternatives
+  Quick office discontinued, there are alternatives, I use andropen
   
 * com.synchronoss.dcs.att.r2g=/system/app/ATT_Ready2Go.apk
 
