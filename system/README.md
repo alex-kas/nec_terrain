@@ -86,8 +86,8 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.android.packageinstaller=/system/app/PackageInstaller.apk
 
-  very system, it seems to be the front-end for `pm` in the shell. If you disable it, you will have to stick to `apk` download, `adb` and `pm`, or some `terminal emulator`
-  
+  **__EDIT:__** it is required by `pm` in the shell and `pm` does not operate w/o it, so do not remove
+
 * com.android.phone=/system/app/Phone.apk
 
   You will not be able to make calls w/o this. It is not just graphics, also some binary internals to communicate with the modem, proprietary in fact. So, no replacement
@@ -125,6 +125,10 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   The database which identifies a numeric gsm network id with the name. Maybe not really critical but chances are some interface elements may complain. They want to write a name, not a number of the
   gsm network
   
+* com.android.providers.userdictionary=/system/app/UserDictionaryProvider.apk
+
+  **__EDIT:__** If you remove this program you will get error `stop` anytime you quit editing of the input method properties. I decided to keep
+
 * com.android.provision=/system/app/Provision.apk
 
   People say, it is important and its data look so, but not sure, what is it exactly
@@ -132,12 +136,6 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
 * com.android.settings=/system/app/Settings.apk
 
   Your setting interface
-  
-* com.android.sharedstoragebackup=/system/app/SharedStorageBackup.apk
-
-  **THIS IS NOT A BACKUP SOMEWHERE, THIS IS INSIDE YOUR PHONE, APP'S COMMUNICATION**
-  
-  If disabled/removed, some apps, watsapp and skype in particular *DO NOT* autostart, do not disable
   
 * com.android.smspush=/system/app/WAPPushManager.apk
 
@@ -201,8 +199,18 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
   
 * com.kpt_nec.adaptxt=/system/app/NEC_Adaptxt_Base_v1_2.apk
 
-  Not sure it is useful, but I kept for a moment. Do not know why. It is to correct your input
+  **__EDIT:__** IT IS VERY SYSTEM, It is what manges properties of your physical keyboard. The story is even more frustrating here:
   
+  A virtual keyboard cannot be installed so you are in stuck in two situations:
+  * You need some non-only-26-Latin-character input
+  * You need to use something like terminal and to send, say ctrl-c, or arrow-up codes there
+  
+  I have tested dozens of options: no keyboard/input method starts its graphical interface. All silently use the physical keys and only them. `hackers keyboard` and `swiftkeyboard`
+  are just two examples. If you go brave and **disable** `adaptxt` (of course installing some other input method in parallel and enabling it, and defaulting to it),
+  then before reboot your keyboard will function but then you will the the so called boot loop. I got and it was tricky to get out.
+  
+  In fact it is a problem. How to use a terminal or type, for me for example, Cyrillic letters?
+
 * com.nec.android.ncmc.ecomode=/system/app/EcoMode.apk
 
   ECO-mode, nec specific. Seems it can be off here, but I kept, let it save battery, maybe. Not sure, it is useful, though
@@ -327,10 +335,10 @@ Currently in my phone all apps from the `disable` list below are indeed disabled
 
   **unknown** but seems to be some advert, removed w/o issues
   
-* com.android.providers.userdictionary=/system/app/UserDictionaryProvider.apk
+* com.android.sharedstoragebackup=/system/app/SharedStorageBackup.apk
 
-  Your dictionary if you want to give new words to the phone, he is not smart initially
-  
+  **__EDIT:__** this program can be removed and was misatkenly said as impoartant earlier
+
 * com.android.videoeditor=/system/app/VideoEditor.apk
 
   Stock video editor, why
@@ -617,6 +625,15 @@ but continue using these *providers*. Some apps, however initiate their own stor
 * uk.co.nickfines.RealCalc=/mnt/asec/uk.co.nickfines.RealCalc-1/pkg.apk
 
   Nice and quite scientific calculator
-  
+
+#### Apps autostart
+
+The thing is like that. Say, you use skype. When you start the phone and *before* any interaction with skype and *before* any external call/message you may notice that its presence has gone from accounts to be synced and all skype contacts are gone from the contacts list.
+
+BUT, skype is alive, you can start chating from outside.
+
+Once you interact with skype somehow (on the phone or chat/call from outside), all these oddities are gone.
+
+Eventually I spotted the beast: it is like that if you have moved skype to the sd-card. I decided just to keep it in the phone, not a problem, but good to know. Perhaps this affect other programs of such kind.
 
 *Most likely this effort is to be continued ...*
