@@ -1,10 +1,11 @@
 ## Exploiting NEC Terrain mobile
 
+_Instructions changed below_
 
 ### Introduction and terroot
 
 The pre-story can be found in http://forum.xda-developers.com/showthread.php?t=2515602
-Many useful scripts, links and the most important the rooting app, **terroot**,  can be found in https://github.com/x29a/nec_terrain_root.
+Many useful scripts, links and the most important the unlocking app, **terroot**,  can be found in https://github.com/x29a/nec_terrain_root.
 The latter is an easily traceable app which implements the method (my, in fact) outlined in
 http://forum.xda-developers.com/showpost.php?p=61542922&postcount=186 (also few posts before and all way down)
 
@@ -40,51 +41,30 @@ Good for us, less work. As long as you can flash a modified image.
 
 2. This location is writable under a temporary root and you can flash there any image.
 
-3. **terroot** in its present version flashes there an image composed of the following:
+3. **terroot** flashes there the recovery image (the one from the directoy `recovery/` here).
 
-  * recovery kernel, because it has no protection over system partitions
+4. Also it puts the boot image (the one from the directory `boot` here) into a special place on the external sd-card so that you can flash it from inside the new recovery.
+ 
+**NOTICE** that the present version of boot image *does not* have `att.service.entitlement` set to `false`.
 
-  * boot ramdisk tinkered such that you get `/system` and `/` in `rw` modes and also a property `att.service.entitlement` is set to `false` so that you can tether.
+The latter is achieved by placing `build.prop` in place. See instructions below *how* and *when* to do this. You need this property set to `false` if you want the tethering ability.
 
-So having run **terroot** at least once you can do the following: boot as normal and have your normal system or boot as recovery and have a feeling of a normal system but w/o
-limits and with `/system` already `rw`.
-You still however, need to use `run_root_shell` to have a root environment. But now, using it you can place, say `su` binary into `/system/bin`
+### The concept
 
-### Another concept
+The just presented concept implements an idea of  a fully independent recovery. This means that if you mess up `/system` directory
+you have chances to sort things out. You need this in particular if you want to repartition the internal memory - you just should __not__ do it on a live system or for the sake of security.
+Originally you have almost no space for your programs (800MiB) and more than 4GiB just for photos, video, etc.
 
-The just presented concept lacks an independent recovery because any start eventually depends on `/system` which is unique. This means that if you mess up `/system` directory
-you have great chances not to boot anymore.
+*Note that the original recovery lacks of ability to restore `/system`. Stock recovery presumes your `/system` could not be modified*
 
-*Note that the original recovery lacks of ability to restore `/system` either. Stock recovery presumes your `/system` could not be modified*
+#### New recovery by hands
 
-I therefore promote an idea of an independent self-consistent recovery image which is capable to revert any crazy changes you could have made to your phone. Moreover
-this is essential to a re-partitioning which is a crucial issue. Originally you have in your partition table:
-```
-   13      2818048      4456447       819200KiB (  800.00MiB) userdata
-   14      4456448     13565951      4554752KiB ( 4448.00MiB) GROW
-```
-This essentially means almost no space for your programs and more than 4GiB just for photos, video, etc.
-
-
-To implement this idea you should flash some proper recovery image into its place. You can do it after you have run **terroot** at least once. Because
-essentially you need to re-map the recovery partition to another location, and **terroot** does this. Also you can do it by hands using `gdisk`.
-
-*You may ask me: but this eliminates the main effort of __terroot__ - possibility to boot into an environment where `/system` can be done `rw`. Why to we need this?*
-
-*You need this if you want one of the following: repartition - you just should __not__ do it on a live system or for the sake of security - with such a recovery
-you will restore your system from almost any mess. Of course, once a superior recovery is in place we will flash a good image to the boot partition so that booting normally you
-get rooted and submissive system.*
-
-If you are not interested in either of those options - **terroot** is just for you. Otherwise you might want reading further.
-
-#### New recovery
-
-Remember, to proceed further you MUST run **terroot** at least once. Or try `gdisk`
+You can go a more linux-terminal way if you like instead of **terroot**.
 
 * **recovery/** - folder: the proper recovery image is there
 
-To install new recovery into its proper place, i.e. recovery partition, You download all (3) files from the `recovery/` folder here into one folder on your pc. Check that `run_root_shell`
-and `adbr.sh` have proper permissions `755`.
+To install new recovery into its proper place, i.e. recovery partition, You download `adbr.sh`, `flash_recovery.sh`, `run_root_shell`, `sgdisk` and one of the `.bin` images from the `recovery/` folder here into one folder on your pc. Check that `run_root_shell`, `sgdisk` and both `.sh` scripts have permissions `755`.
+**IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc.
 
 Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable and execute on your pc (you should be inside the folder where you have just downloaded the stuff)
 ```
@@ -98,16 +78,10 @@ sudo adb devices
 
 As the result you will have a brand new recovery image to be booted with *vol-down+power* pressed.
 
-As stated you have lost an achievement of **terroot** and do not have a possibility to boot such that `/system` is `rw`.
-But wait, we are working now exactly for that but in a safer way.
-
-
 
 #### Repartitioning userdata and GROW
 
-This is why we sacrifice the simplicity of **terroot**.
-
-Re-partitioning  is a straightforward but a *must-to-be-done-accurate* procedure. Mistakes may cost you a phone.
+Re-partitioning  is a straightforward but a *must-to-be-done-accurately* procedure. Mistakes may cost you a phone.
 
 ---
 
@@ -178,17 +152,13 @@ All modifications are in MEMORY! It is safe, but DO NOT FORGET TO WRITE, using c
 
 * **?** - anytime for help
 * **d** - delete partition, it asks number: enter number and press `enter`
-* **n** - create new partition, it asks number. If say, you deleted partition number 14, you now can enter 14, so you will just redo it, but of another size. Then starting and ending sectors are asked. You can just get from the table above. OR invent YOURS! As you like. Then it asks about a flag, agree to 8300, even for GROW
+* **n** - create new partition, it asks number. If say, you deleted partition number 14, you now can enter 14, so you will just redo it, but of another size. Then starting and ending sectors are asked. You can just get from the table above. OR invent YOURS! As you like. Then it asks about a flag, agree to 8300, even for GROW. Standartly FFFF flag is not supported
 * **c** - CRUCIAL: you **MUST** give it a name as it was before, **EXACTLY**. Before entering the name you will be asked the partition number, of course
 * **p** - print, how the table looks now
 * **w** - write changes to disk, w/o this you will loose your efforts!
 * **q** -- quit
 
-Once created AND WRITTEN by issuing the command `w` INSIDE `gdisk` you must change the flag of partition 14. Not sure this is critical but better do it:
-```
-sgdisk -t 14:FFFF /dev/block/mmcblk0 -v
-```
-Now you MUST reboot. It is the only way to instruct the kernel to read new partition table. Do it from your pc via
+Once created AND WRITTEN by issuing the command `w` INSIDE `gdisk` you MUST reboot. It is the only way to instruct the kernel to read new partition table. Do it from your pc via
 ```
 adb reboot recovery 
 ```
@@ -203,12 +173,13 @@ adb shell
 Now you MUST create file-systems on your re-shuffled partitions (command inside the adb shell)
 ```
 mkfs.vfat /dev/block/mmcblk0p14
-mkfs.ext4 /dev/block/mmcblk0p13
+mkfs.ext4 -b 1024 -i 4096 /dev/block/mmcblk0p13
 ```
+You are kindly instructed to write the arguments for the ext4 formatiing exactly as they are here. These values of `-b` and `-i` will save you from vasting 25% of the `userdata` space for NOTHING!
 
-After this you will have a system *EXACTLY* like after a stock factory reset. Note, stock factory reset just simple erases ALL on userdata and GROW partitions. Nothing more.
+After this you will have a system *EXACTLY* like after a stock factory reset. Note, stock factory reset just simply erases ALL on userdata and GROW partitions. Nothing more.
 
-*Note, even the stock factory reset does not change `/system` back. There is no "back" for `/system` in this phone. This means you cannot get a REALLY stock configuration, 
+*Remember, even the stock factory reset does not change `/system` back. There is no "back" for `/system` in this phone. This means you cannot get a REALLY stock configuration, 
 unless you ask someone to provide you one.*
 
 *So, saying "factory reset" I mean your files, settings and programs installed by you wiped.*
@@ -235,19 +206,25 @@ After the reboot you either have your previous phone or will have to re-do all t
 
 So to say: **DONE!**
 
-#### Flashing another boot image
+#### Placing boot image by hands
 
-You see, the nice *read-writable* image has gone. We need to make an alternative. It is in
+It is done by **terroot** but, if you like: how you place the boot image without **terroot**. The image is in
 
 * **boot/** - folder
 
-To install new boot into its proper place, i.e. boot partition, you download all (3) files from the `boot/` folder here to some place on your pc. Check that `adbb.sh` has `755` permissions.
+To install new boot into its proper place, i.e. boot partition, you download `adbb.sh`, `build.prop` and one of the the `.bin` images from the `boot/` folder here to some place on your pc. Check that `adbb.sh` has `755` permissions.
+**IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc.
+
 Your phone must be booted normally.
 Run on your pc (you are inside the directory where you downloaded the files)
 ```
 ./adbb.sh
 ```
-To copy files to a proper location on your sdcard (folder named `brnects0.715`), which must be in the phone. Now restart your phone into recovery using
+To copy files to a proper location on your sdcard (folder named `brnects0.715`), which must be in the phone.
+
+#### Flashing another boot image
+
+Restart your phone into recovery typing on your pc
 ```
 adb reboot recovery
 ```
