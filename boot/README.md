@@ -6,7 +6,7 @@ enforce a write-protection above linux permissions and privileges.
 `build.prop` should be placed in the `/system`
 
 `adbb.sh` - script to place the boot image and build.prop in a special folder on the sd-card (`brnects0.715`) so that a script in recovery
-`flash_boot.sh` can see them. In fact now this script flashes only the image, `build.prop` must be put by hands.
+`/rbin/flash_boot.sh` can see them. In fact now this script flashes only the image, `build.prop` must be put by hands.
 
 #### Changelog:
 
