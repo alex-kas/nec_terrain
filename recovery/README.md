@@ -7,8 +7,8 @@ enforce a write-protection above linux permissions and privileges.
 * `sgdisk` is used to re-map recovery partition to a know standard hole
 * `flash_recovery.sh` - the script which is run on the phone to do re-map of the partition and flashing
 
-* `kas.recovery.bin` - the image itself
-* `kas.recovery_no.bin` - actually the same image with the recovery binary disabled; for those who is scared by a possible fota update
+* `kas.recovery.bin` - the recovery image v0.8
+* `kas.recovery_no.bin` - the recovery image v0.8.1, actually the same image with the recovery binary disabled; for those who is scared by a possible fota update
 
 * `adbr.sh` - script to be run on your computer to eventually flash the recovery image on a normally booted phone.
 
