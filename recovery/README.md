@@ -6,8 +6,10 @@ enforce a write-protection above linux permissions and privileges.
 Images:
 * `kas.recovery.bin` - the recovery image v0.8
 * `kas.recovery_no.bin` - the recovery image v0.8.1, actually the same image with the recovery binary disabled; for those who is scared by a possible fota update
+
 Install script:
 * `adbr.sh` - script to be run on your computer to eventually flash the recovery image on a normally booted phone.
+
 Required binaries and scripts for the install:
 * `run_root_shell` is used to flash this image on a non-rooted NEC Terrain
 * `sgdisk` is used to re-map recovery partition to a know standard hole
