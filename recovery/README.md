@@ -3,21 +3,21 @@
 This recovery image is made of the original kernel used in the stock recovery and an amended original ramdisk. This kernel does not
 enforce a write-protection above linux permissions and privileges.
 
-`run_root_shell` is used to flash this image on a non-rooted NEC Terrain
-`sgdisk` is used to re-map recovery partition to a know standard hole
-`flash_recovery.sh` - the script which is run on the phone to do re-map of the partition and flashing
+* `run_root_shell` is used to flash this image on a non-rooted NEC Terrain
+* `sgdisk` is used to re-map recovery partition to a know standard hole
+* `flash_recovery.sh` - the script which is run on the phone to do re-map of the partition and flashing
 
-`kas.recovery.bin` - the image itself
-`kas.recovery_no.bin` - actually the same image with the recovery binary disabled; for those who is scared by a possible fota update
+* `kas.recovery.bin` - the image itself
+* `kas.recovery_no.bin` - actually the same image with the recovery binary disabled; for those who is scared by a possible fota update
 
-`adbr.sh` - script to be run on your computer to eventually flash the recovery image on a normally booted phone.
+* `adbr.sh` - script to be run on your computer to eventually flash the recovery image on a normally booted phone.
 
 #### Changelog for the *image*:
 
-* **version 0.8.1**
+* **version 0.8.1** (`kas.recovery_no.bin`)
   * ramdisk/init.rc: recovery binary disabled
 
-* **version 0.8** (the very first!)
+* **version 0.8** (`kas.recovery.bin`, the very first!)
   * ramdisk/default.prop
     * ro.secure=0, no obvious use
     * ro.debuggable=1, no obviouc use
