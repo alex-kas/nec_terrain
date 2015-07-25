@@ -16,7 +16,7 @@ enforce a write-protection above linux permissions and privileges.
   * ramdisk/init.rc
     * All mtd@xxx attempts removed
     * e2fsck enforced on `/system` (partition 12) as it can be writable now
-    * `noauto_da_alloc` removed on mounting /system
+    * `noauto_da_alloc` removed on mounting /data (partition 13)
     * All ext4 partitions are mounted with `noatime,nodiratime,discard` instead of `relatime`
   * ramdisk/init.target.rc: `/tombstones` (partition 17) is now mounted with `noatime,nodiratime,discard` instead of `relatime`
   * /system/build.prop
