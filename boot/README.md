@@ -18,6 +18,8 @@ enforce a write-protection above linux permissions and privileges.
     * e2fsck enforced on `/system` (partition 12) as it can be writable now
     * `noauto_da_alloc` removed on mounting /data (partition 13)
     * All ext4 partitions are mounted with `noatime,nodiratime,discard` instead of `relatime`
+    * Service `debuggerd` disabled
+    * Service `bootanim` (bootanimation) disaled
   * ramdisk/init.target.rc: `/tombstones` (partition 17) is now mounted with `noatime,nodiratime,discard` instead of `relatime`
   * /system/build.prop
     * att.service.entitlement=false for tethering
