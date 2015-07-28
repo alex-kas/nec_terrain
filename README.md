@@ -1,53 +1,47 @@
-## Exploiting NEC Terrain mobile
+## NEC Terrain
 
-_Instructions changed below_
+_As the name of the project suggests all the resources here are devoted to the NEC Terrain mobile phone. As such all
+the resources here are specific to this phone (even though theoretically applicable to another one). Moreover, various subjective statements reflect my **personal** opinion._
 
-### Introduction and terroot
+### Specifications and goods
 
-The pre-story can be found in http://forum.xda-developers.com/showthread.php?t=2515602
-Many useful scripts, links and the most important the unlocking app, **terroot**,  can be found in https://github.com/x29a/nec_terrain_root.
-The latter is an easily traceable app which implements the method (my, in fact) outlined in
-http://forum.xda-developers.com/showpost.php?p=61542922&postcount=186 (also few posts before and all way down)
+To be more precise we are talking about the following phone (the info from the `about` menu inside the phone):
+* Model number: NE-201A1A
+* Android version: 4.0.4
+* Baseband version: N126400001
+* Kernel version: 3.0.8 ncmc@ncmc #2 SMP PREEMPT Thu Sep 26 17:01:21 IST 2013
+* Build number: 126460101
 
-#### A bit of info:
+and the full specifications can be found [here](http://www.gsmarena.com/nec_terrain-5553.php).
 
-Terminology:
+In short, this is a heavily protected phone, all-proof (water, dust, salt, ...) with QWERTY physical keyboard which is also water-proof. You can type under the rain. It is reasonably fast: 1.5GHz dual-core CPU and it even has 1GB of RAM. The stock configuration has Android 4.0.4. Its internal memory is 8GB. Seems like a unique combination in the world of all phones.
 
-* *boot* - normal boot via the image on the boot partition (number 9). The kernel in this image blocks rw access to the vital system areas, like system, boot, recovery, sbl1,2,3, aboot, rpm, tz.
-You cannot write there even if you are root. You moreover cannot remount those partitions rw. The physical area of the internal memory where these partitions are is also write-protected by the kernel.
-* *recovery* - recovery boot (via *vol-down+power*) via the recovery partition (number 11). The kernel there is free of the write-blocks.
-* *system* or *ROM* - your actual operating system, all inside /system directory
+In fact the king property is the physical keyboard. If someone wonders why: the physics of a touch screen is such that its functionality is almost absolutely screwed up in a presence of water-drops. Under the rain or a wet snow, or if your fingers are wet. You are just unable to operate a phone w/o a keyboard in such conditions.
 
-Each bootable image has kernel and the initramdisk to kick-off the system. In our story stock kernels in boot and recovery are different, clearly due to presence/absence of blocks but
-the config.gz for both kernels is identical.
+Leaving the keyboard aside, this phone is comparable to Samsung Galaxy S4 Active or even outperformed by Casio Commando 4G LTE, Samsung Galaxy S5 Active and Samsung Galaxy S6 Active. However, my life-style demands the physical keys to be.
 
-In order to root the phone we need to place the su binary inside /system/bin (or /system/xbin) and the goal is to open it for write. Since even root cannot do it, the new goal is to modify the boot
-image where all mountings happen. But re-flashing of an image is not possible.
+### Odds
 
-So, the goal is to flash it to a new place and instruct the system about this. Out of the sudden the gpt table itself is NOT protected from writing. AND, this is essential, it has holes.
-Moreover, the boot locker in aboot partition (number 7) just a joke. It exists, it check certificates, hash, etc, but its logic is like that:
+This phone has several serious odds:
 
-1. If I see a wrong image I write one byte just inside my aboot image.
-2. Then I boot your wrong kernel, have it.
-3. Next time, if I see that the byte from point 1 is set, I boot whatever you like w/o verification.
-4. ...
+* It is discontinued. No updates are expected even though the phone itself is capable for KitKat at least
+* Its partition scheme is as awful as that:
+  * 800MiB for programs installed by you. Practically nothing, just updates to the system apps get it all immediately
+  * 4.3GiB for your files, like photos, video, but *not* programs
+* Tethering cannot be enabled
+* A bug (one so far) was found which brings the phone to reboot if a program needs to read big set of data files
 
-Good for us, less work. As long as you can flash a modified image.
+The less severe problem is the big amount of bloatware.
 
-#### What is **terroot**?
+### Table of contents
 
-1. Using the run_root_shell, which in turn uses a loop-hole in the original kernel to achieve a temporary root,
-**terroot** remaps the recovery partition into another location.
-
-2. This location is writable under a temporary root and you can flash there any image.
-
-3. **terroot** flashes there the recovery image (the one from the directoy `recovery/` here).
-
-4. Also it puts the boot image (the one from the directory `boot` here) into a special place on the external sd-card so that you can flash it from inside the new recovery.
- 
-**NOTICE** that the present version of boot image *does not* have `att.service.entitlement` set to `false`.
-
-The latter is achieved by placing `build.prop` in place. See instructions below *how* and *when* to do this. You need this property set to `false` if you want the tethering ability.
+1. [General theory](general-th.md) - is a worth reading text which explains what is rooting, nand-lock, bootloader unlocking, and why these are different and sometimes disconnected things. Also many terms are explained there.
+2. [Exploit](exploit-th.md) - explains the theory of how the NEC Terrain is exploited
+3. [New Recovery](../blob/master/recovery-howto.md) - desciption of the new recovery image and a step-by-step instruction to install one
+4. [Re-partitioning](../blob/master/repartitioning-howto) -  a step-by-step instruction to re-partition the internal memory
+4. [New Boot](../blob/master/boot-howto.md) - description of the new boot image,  a step-by-step instruction to install one
+5. [System modification](../blob/master/system-howto.md) -  several useful howto-s on system modification
+6. [Debloating](system/README.md) - lists of apps which can be disabled and why, and which *cannot* be disabled and why
 
 ### The concept
 
