@@ -93,4 +93,4 @@ Now we are ready to go for NEC Terrain.
 
 ---
 
-*You should read [here](exploit-pre.md) what are the strict requirements to implement the exploit.*
+*You should read [here](exploit-th.md) what are the strict requirements to implement the exploit.*
