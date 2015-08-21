@@ -37,11 +37,12 @@ The less severe problem is the big amount of bloatware.
 
 1. [General theory](general-th.md) - is a worth reading text which explains what is rooting, nand-lock, bootloader unlocking, and why these are different and sometimes disconnected things. Also many terms are explained there.
 2. [Exploit](exploit-th.md) - explains the theory of how the NEC Terrain is exploited
-3. [New Recovery](../blob/master/recovery-howto.md) - desciption of the new recovery image and a step-by-step instruction to install one
-4. [Re-partitioning](../blob/master/repartitioning-howto) -  a step-by-step instruction to re-partition the internal memory
-4. [New Boot](../blob/master/boot-howto.md) - description of the new boot image,  a step-by-step instruction to install one
-5. [System modification](../blob/master/system-howto.md) -  several useful howto-s on system modification
-6. [Debloating](system/README.md) - lists of apps which can be disabled and why, and which *cannot* be disabled and why
+3. [Pre-requisits](exploit-pre.md) - lists mandatory pre-requisits to exploit the NEC Terrain
+4. [New Recovery](../blob/master/recovery-howto.md) - desciption of the new recovery image and a step-by-step instruction to install one
+5. [Re-partitioning](../blob/master/repartitioning-howto) -  a step-by-step instruction to re-partition the internal memory
+6. [New Boot](../blob/master/boot-howto.md) - description of the new boot image,  a step-by-step instruction to install one
+7. [System modification](../blob/master/system-howto.md) -  several useful howto-s on system modification
+8. [Debloating](system/README.md) - lists of apps which can be disabled and why, and which *cannot* be disabled and why
 
 ### The concept
 
