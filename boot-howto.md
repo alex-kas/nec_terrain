@@ -20,6 +20,8 @@ Run on your pc (you are inside the directory where you downloaded the files)
 ```
 To copy files to a proper location on your sdcard (folder named `brnects0.715`), the card must be in the phone.
 
+**The new recovery must be installed!**
+
 Now restart your phone into recovery typing on your pc
 ```
 adb reboot recovery
