@@ -35,6 +35,16 @@ Then execute on your pc (you should be inside the folder where you have just dow
 ```
 As the result you will have a brand new recovery image to be booted with *vol-down+power* pressed.
 
+Remember: It is immediately root.
+
+**BE CAREFUL!!! IT IS THE PROPER ROOT!!! NO LIMITS!!!**
+
+`adb` access is the most serious achievement of this new recovery.
+
+You have in your disposal `busybox` (with all links), `gdisk`, `sgdik`, `mkfs.ext4` and `mksh` in `/sbin` folder. It is a good linux recovery set of tools. Also you have
+some essential scripts in `/rbin`.
+`/rbin` is *not* in your path so you will not run scripts from there unintentionally.
+
 ---
 
 *You should proceed [here](boot-howto.md) for the next exercise: new boot image.*
