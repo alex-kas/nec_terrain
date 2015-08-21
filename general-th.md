@@ -62,7 +62,7 @@ So, being `root` does not mean be allowed everything. Traditions may be broken. 
 
 ##### Locked bootloader
 
-This is another *feature* used by phone makers. The boot process goes in stages. Program code from various partitions of the internal memory is being executed in order. During this the phone initialization is performed. After many really initial stages the so called `aboot` is executed. This guy decides what to boot: *normal* or *recovery* mode depending on has or not the `vol-down` key been pressed. Then it boots using either `boot` or `recovery` partition.
+This is another *feature* used by phone makers. The boot process goes in stages. Program code from various partitions of the internal memory is being executed in order. During this the phone initialization is performed. After many really initial stages the so called `aboot` is executed. This guy decides what to boot: *normal* or *recovery* mode depending on has or not the *vol-down* key been pressed. Then it boots using either `boot` or `recovery` partition.
 
 The trick is that before `aboot` is called it is being checked using certificates written inside and computing the hash sum. If the check does not succeed the boot process halts.
 
