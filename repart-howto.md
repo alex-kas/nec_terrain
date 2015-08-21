@@ -32,9 +32,9 @@ You will see a long output listing each file added to an archive on your sdcard 
 
 #### Step 2. Actual re-partitioning
 
-For this just run
+For this run
 ```
-gdisk
+gdisk /dev/block/mmcblk0
 ```
 
 Unfortunately, I cannot provide you help here as it is solely up to you HOW you want to breakdown partitions. Just for reference, originally the partitions of interest reside as
