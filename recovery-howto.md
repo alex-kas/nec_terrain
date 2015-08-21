@@ -22,6 +22,7 @@ Thus the wish is to implement a fully independent and fully functional recovery.
 * **recovery/** - folder: the proper recovery image is there
 
 To install new recovery into its proper place, i.e. recovery partition, You download `adbr.sh`, `flash_recovery.sh`, `run_root_shell`, `sgdisk` and one of the `.bin` images from the `recovery/` folder here into one folder on your pc. Check that `run_root_shell`, `sgdisk` and both `.sh` scripts have permissions `755`.
+
 **IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc.
 
 Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable. Start `adb` daemon for exmaple by
