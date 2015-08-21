@@ -2,100 +2,38 @@
 
 ---
 
-kuku
+### New recovery
 
+#### What is new?
 
+To understand what is *new* let's say what was *old*. The stock configuration of NEC Terrain comes with the ability to boot into the *recovery* mode. One of the purpose is to perform the *factory reset*. To be more specific let's explain. There are five partitions of the internal memory whihc you 'feel' working with this phone:
+* `system` - where all the system pre-insatlled programs are
+* `userdata` - where all the user insatlled programs go
+* `GROW` - where all user files like photos and video go
+* `boot` - image for the normal boot
+* `recovery` - image for the recovery boot
 
-### Exploit **mandatory** pre-requisits
+*factory reset* means formatting `userdata` to ext4 and `GROW` to vfat using the stock `recovery` binary inside the recovery partition. All other partitions are considered immutable. It means that if you achieve eventually root and then mess up, say, `system` which is whatever inside the directory `/system`, you are in stuck. Stock recovery will not repair this.
 
-#### Phone
+Thus the wish is to implement a fully independent and fully functional recovery. Such that it would be capable to restore whatever in the system. This is also essential to repartition your system as originally you have almost no space for your programs (800MiB in `userdata`) and more than 4GiB just for photos, video, etc (in `GROW`).
 
-You need a NEC Terrain phone.
+#### Installing new recovery
 
-#### USB Debugging
+* **recovery/** - folder: the proper recovery image is there
 
-The option `USB Debugging` found in *Settings->Developer options* must be enabled.
+To install new recovery into its proper place, i.e. recovery partition, You download `adbr.sh`, `flash_recovery.sh`, `run_root_shell`, `sgdisk` and one of the `.bin` images from the `recovery/` folder here into one folder on your pc. Check that `run_root_shell`, `sgdisk` and both `.sh` scripts have permissions `755`.
+**IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc.
 
-#### Linux desktop/laptop with `adb` and a USB cable
-
-*All scripts here are developed with linux in mind. They are portable easily to windows but this is not expected to be
-done here.*
-
-You must have `adb` installed on your pc and have a USB cable to connect your phone with your pc.
-
-#### Stock GPT. *THE MOST CRUCIAL PART*
-
-It is extremely crucial for the scripts to work as expected that your stock GPT table is **EXACTLY** like that
+Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable. Start `adb` daemon for exmaple by
 ```
-Number  Start (sector)    End (sector)  Size       Code  Name
-   1           32768          294911   128.0 MiB   0700  modem
-   2          294912          425983   64.0 MiB    FFFF  flashbackup
-   3          425984          557055   64.0 MiB    FFFF  fatallog
-   4          589824          590335   256.0 KiB   FFFF  sbl1
-   5          590336          590847   256.0 KiB   FFFF  sbl2
-   6          590848          594943   2.0 MiB     FFFF  sbl3
-   7          594944          595967   512.0 KiB   FFFF  aboot
-   8          595968          596991   512.0 KiB   FFFF  rpm
-   9          596992          617471   10.0 MiB    FFFF  boot
-  10          617472          618495   512.0 KiB   FFFF  tz
-  11          618496          638975   10.0 MiB    FFFF  recovery
-  12          638976         2801663   1.0 GiB     8300  system
-  13         2818048         4456447   800.0 MiB   8300  userdata
-  14         4456448        13565951   4.3 GiB     FFFF  GROW
-  15        13565952        13582335   8.0 MiB     8300  persist
-  16        13582336        14319615   360.0 MiB   8300  cache
-  17        14319616        14462975   70.0 MiB    8300  tombstones
-  18        14462976        14465023   1024.0 KiB  FFFF  misc
-  19        14465024        14465025   1024 bytes  FFFF  pad
-  20        14465026        14465041   8.0 KiB     FFFF  ssd
-  21        14465042        14471185   3.0 MiB     FFFF  modemst1
-  22        14471186        14477329   3.0 MiB     FFFF  modemst2
-  23        14477330        14483473   3.0 MiB     FFFF  fsg
-  24        14483474        14483985   256.0 KiB   FFFF  sbl2_bkp
-  25        14483986        14488081   2.0 MiB     FFFF  sbl3_bkp
-  26        14488082        14489105   512.0 KiB   FFFF  aboot_bkp
-  27        14489106        14490129   512.0 KiB   FFFF  rpm_bkp
-  28        14490130        14491153   512.0 KiB   FFFF  tz_bkp
-  29        14491154        14511633   10.0 MiB    FFFF  recovery_bkp
-  30        14511634        14532113   10.0 MiB    FFFF  fota_config
-  31        14532114        14990865   224.0 MiB   FFFF  MM
+sudo adb devices
 ```
-The point of **MAIN CONCERN** is the gap between partitions 3 and 4. It must be there and the end of partition 3 and the beginning
-of partition 4 must be **EXACTLY** as above.
-
-"Stock" means the configuration before any possible use of the scripts from here or
-before using the **terroot** program or before any other means of altering.
-
-The script in `recovery/` directory here named [adbtestgpt.sh]() gets the GPT table from the phone and shows it
-for you. The script does not take decisions. It is you, who compares and decides what to do!
-
-#### micro-SD card
-
-For the task of flashing new boot image and for the backup during the repartitioning you need a micro-SD card. It should 
-have 12MiB free for the boot image, up to 5.2GiB free for the data backup (this is the maximum of partitions
-userdata (number 13) and GROW (number 14) together)
-and 500MiB free for a possible system
-backup.
-
-The card should be partitioned as MBR with a partition. In other words, it should be seen in linux as
+Then execute on your pc (you should be inside the folder where you have just downloaded the stuff)
 ```
-/dev/mmcblk0
+./adbr.sh
 ```
-and its partition as
-```
-/dev/mmcblk0p1
-```
-The `/dev/mmcblk0p1` partition must formatted as `vfat`.
-
-In even simple words, if you examine your SD card in `disks` utility on your pc you should see:
-```
-Partitioning: Master Boot Record
-Device: /dev/mmcblk0p1
-Contents: vfat
-```
-
-#### Set? Ready? GO!
+As the result you will have a brand new recovery image to be booted with *vol-down+power* pressed.
 
 ---
 
-*You should proceed [here](boot-howto.md) for the next exercise: new boot.*
+*You should proceed [here](boot-howto.md) for the next exercise: new boot image.*
