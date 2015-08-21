@@ -33,7 +33,7 @@ This phone has several serious odds:
 
 The less severe problem is the big amount of bloatware.
 
-### Table of contents
+### Table of contents for hackers
 
 1. [General theory](general-th.md) - is a worth reading text which explains what is rooting, nand-lock, bootloader unlocking, and why these are different and sometimes disconnected things. Also many terms are explained there.
 2. [Exploit](exploit-th.md) - explains the theory of how the NEC Terrain is exploited
@@ -41,15 +41,9 @@ The less severe problem is the big amount of bloatware.
 4. [New Recovery](recovery-howto.md) - desciption of the new recovery image and a step-by-step instruction to install one
 5. [New Boot](boot-howto.md) - description of the new boot image,  a step-by-step instruction to install one
 6. [Re-partitioning](repart-howto.md) -  a step-by-step instruction to re-partition the internal memory
-7. [System modification](../blob/master/system-howto.md) -  several useful howto-s on system modification
-8. [Debloating](system/README.md) - lists of apps which can be disabled and why, and which *cannot* be disabled and why
+7. [System modification](system-howto.md) -  several useful howto-s on system modification
+8. [Troubleshooting](ts.md) - issues
 
+### Debloating
 
-
-#### Troubleshooting
-
-Interaction of your pc with the phone may stall. No clue why exactly but if you believe that some operation cannot last so long you can try to wake up `adb` either by
-trying `adb shell` from another terminal on your pc or by unplugging/re-plugging the usb cable. In extreme case you may have to take the battery off, then place it back and then boot your phone
-with *vol-down* pressed. (the latter happened to me only once).
-
-Notice that some operations take indeed long time. Sometimes mounting of a partition takes up to 15 seconds. Again, no clue, why.
+[Here](system/README.md) are the lists of apps which can be disabled and why, and which *cannot* be disabled and why
