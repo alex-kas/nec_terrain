@@ -106,4 +106,4 @@ So to say: **DONE!**
 
 ---
 
-*You should proceed [here](debloat-howto.md) for the next exercise: debloating.*
+*You should proceed [here](system-howto.md) for some extra exercises.*
