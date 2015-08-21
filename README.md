@@ -39,40 +39,10 @@ The less severe problem is the big amount of bloatware.
 2. [Exploit](exploit-th.md) - explains the theory of how the NEC Terrain is exploited
 3. [Pre-requisits](exploit-pre.md) - lists mandatory pre-requisits to exploit the NEC Terrain
 4. [New Recovery](../blob/master/recovery-howto.md) - desciption of the new recovery image and a step-by-step instruction to install one
-5. [Re-partitioning](../blob/master/repartitioning-howto) -  a step-by-step instruction to re-partition the internal memory
+5. [Re-partitioning](../blob/master/repart-howto.md) -  a step-by-step instruction to re-partition the internal memory
 6. [New Boot](../blob/master/boot-howto.md) - description of the new boot image,  a step-by-step instruction to install one
 7. [System modification](../blob/master/system-howto.md) -  several useful howto-s on system modification
 8. [Debloating](system/README.md) - lists of apps which can be disabled and why, and which *cannot* be disabled and why
-
-### The concept
-
-The just presented concept implements an idea of  a fully independent recovery. This means that if you mess up `/system` directory
-you have chances to sort things out. You need this in particular if you want to repartition the internal memory - you just should __not__ do it on a live system or for the sake of security.
-Originally you have almost no space for your programs (800MiB) and more than 4GiB just for photos, video, etc.
-
-*Note that the original recovery lacks of ability to restore `/system`. Stock recovery presumes your `/system` could not be modified*
-
-#### New recovery by hands
-
-You can go a more linux-terminal way if you like instead of **terroot**.
-
-* **recovery/** - folder: the proper recovery image is there
-
-To install new recovery into its proper place, i.e. recovery partition, You download `adbr.sh`, `flash_recovery.sh`, `run_root_shell`, `sgdisk` and one of the `.bin` images from the `recovery/` folder here into one folder on your pc. Check that `run_root_shell`, `sgdisk` and both `.sh` scripts have permissions `755`.
-**IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc.
-
-Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable and execute on your pc (you should be inside the folder where you have just downloaded the stuff)
-```
-./adbr.sh
-```
-*If it complains, this means that perhaps you have not started `adb` before. Or maybe you have to use root to start it? On my pc I must initiate `adb` using*
-```
-sudo adb devices
-```
-*also check cables :)*
-
-As the result you will have a brand new recovery image to be booted with *vol-down+power* pressed.
-
 
 #### Repartitioning userdata and GROW
 
