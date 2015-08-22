@@ -3,14 +3,22 @@
 This boot image is made of a kernel extracted from the stock recovery and a modified original ramdisk from the boot image. This kernel does not
 enforce a write-protection above linux permissions and privileges.
 
-* `kas.boot.bin` - the boot image, v0.8
+* `kas.boot.bin-vvv` - the boot image, version vvv
 * `build.prop` should be placed in the `/system`
 
-* `adbb.sh` - script to place the boot image and build.prop in a special folder on the sd-card (`brnects0.715`) so that a script in recovery `/rbin/flash_boot.sh` can see them. In fact now this script flashes only the image, `build.prop` must be put by hands.
+* `adbb.sh` - script to place the boot image and build.prop in a special folder on the sd-card (`brnects0.715`) so that a script in recovery `/rbin/flash_boot.sh` can see them and write in place.
 
 #### Changelog for the *image*:
 
-* **version 0.8** (`kas.boot.bin`, the very first!)
+* **version 0.9** (`kas.boot.bin-0.9`)
+  * service flash_recovery is commented out to prevent a possible FOTA action
+  * service pmeval is commented out as its binary does not exist
+  * service ms-monitor is commented out as its binary does not exist
+  * service immvibed is commented out as its binary does not exist
+  * insertion of the module adux1001_driver.ko is commented out as it does not exist
+  * insertion of the module tspdrv.ko is commented out as it does not exist
+
+* **version 0.8** (`kas.boot.bin-0.8`, the very first!)
   * kernel from the stock recovery  
   * ramdisk/default.prop: ro.secure=0, no obvious use
   * ramdisk/init.rc
