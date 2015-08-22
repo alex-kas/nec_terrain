@@ -208,4 +208,4 @@ dalvik.vm.stack-trace-file=/data/anr/traces.txt
 
 # KAS add
 service.adb.root=1
-
+# find wifi off
