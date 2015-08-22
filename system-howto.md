@@ -2,64 +2,38 @@
 
 ---
 
-### Placing new boot image
+### Placing `su` and `Superuser.apk`
 
-* **boot/** - the images are there
-
-To install a new boot into its proper place, i.e. boot partition, you download `adbb.sh`, `build.prop` and one of the the `.bin` images from the `boot/` folder here to some place on your pc. Check that `adbb.sh` has `755` permissions.
-
-**IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc.
-
-Your phone must be booted normally. The `adb` daemon must be started on your pc. To be sure in the latter issue, for instance
+You can get `su` and `Superuser.apk` from the **system/** folder here. Then, in order to install them properly do the following commands. Ensure that your `adb` daemon is running bu issuing
 ```
 sudo adb devices
 ```
-Run on your pc (you are inside the directory where you downloaded the files)
-```
-./adbb.sh
-```
-To copy files to a proper location on your sdcard (folder named `brnects0.715`), the card must be in the phone.
-
 **The new recovery must be installed!**
 
-Now restart your phone into recovery typing on your pc
+Boot the phone into the recovery mode by pressing *vol-down+power*. From the directory where you have downloaded the suepruser stuff do
 ```
-adb reboot recovery
-```
-Now go into shell
-```
+adb push su /tmp
+adb push Superuser.apk /tmp
 adb shell
 ```
-and do inside the shell
+Now you are in the adb shell. Do there
 ```
-cd /rbin
-./flash_boot.sh
-```
-It will copy the current boot image to sdcard under the name `brnects0.715/boot.current.bin` and flash `kas.boot.bin` into place. On top of this we have to update `build.prop` file.
-I suggest doing all by hands, even though I can write a script. But it may happen you want to see how to do this in order to do another tinkering next time w/o a help
-```
+cd /tmp
 mount /dev/block/mmcblk0p12 /system
-mount /dev/block/mmcblk1p1 /sdcard
-cd /system
-cp /sdcard/brnects0.715/build.prop .
-chmod 644 build.prop
-cd /
+cp su /system/xbin/su
+chown 0:0 /system/xbin/su
+chmod 6755 /system/xbin/su
+ln -s /system/xbin/su /system/bin/su
+cp Superuser.apk /system/app
+chmod 644 /system/app/Superuser.apk
 umount /system
-umount /sdcard
-```
-Comments: you first mount the actual system to the folder `/system`; then sdcard to the folder `/sdcard`; then you go inside of the system via `cd` and copy the `build.prop` file from sd card there (mind the final dot `.` in the `cp` command, it means the folder where you are *now*, `/system` in this case); then you change permission for `build.prop`; quit to the root folder `/`; and finally unmount mounted partitions using `umount`. The later step ensures all data which could be in cache are really written.
-
-This is *the* way you should do **whatever** with your system next time.
-
-Now
-```
 exit
 ```
-to come back to your pc and
+Now you are back to your pc. Reboot the phone by
 ```
 adb reboot
 ```
-**DONE!**
+After the reboot you will see "Android is upgrading" meaning it installs a new 'system' program `Superuser.apk`
 
 ---
 
