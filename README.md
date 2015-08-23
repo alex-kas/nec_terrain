@@ -33,7 +33,9 @@ This phone has several serious odds:
 
 The less severe problem is the big amount of bloatware.
 
-### Table of contents for hackers
+To overcome at least some of these difficulties we need some hacking. Below is explained how it goes.
+
+### For those who wants freedom
 
 1. [General theory](general-th.md) - is a worth reading text which explains what is rooting, nand-lock, bootloader unlocking, and why these are different and sometimes disconnected things. Also many terms are explained there.
 2. [Exploit](exploit-th.md) - explains the theory of how the NEC Terrain is exploited
@@ -44,6 +46,6 @@ The less severe problem is the big amount of bloatware.
 7. [System modification](system-howto.md) -  several useful howto-s on system modification
 8. [Troubleshooting](ts.md) - issues
 
-### Debloating
+### Bloatware or not bloatware?
 
-[Here](system/README.md) are the lists of apps which can be disabled and why, and which *cannot* be disabled and why
+[Here](system/README.md) are the lists of apps which can be disabled and why, and which *cannot* be disabled and *why*.
