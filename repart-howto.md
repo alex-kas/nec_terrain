@@ -10,6 +10,8 @@ Re-partitioning  is a straightforward but a *must-to-be-done-accurately* procedu
 
 **The new recovery must be installed!**
 
+*Also note the following: you most likely start with a large `GROW` partition and want to finish with a small `GROW` partition. Clearly, restoring will fail if initial size of data on `GROW` is bigger than the final partition size. However, as I understand, in order to pretend that nothing happened and continue using the phone (I mean to avoid complains from the system) you must, at least, restore some basic directory structure on `GROW`. Having said this you are advised to clean up the data on the `GROW` partition to the amount less than expected final size of the `GROW` partition **before** you prceed with backup-restore.*
+
 Boot into the new recovery with *vol-down+power* pressed. Start the `adb` daemon on your pc, for instance doing
 ```
 sudo adb devices
