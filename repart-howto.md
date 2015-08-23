@@ -6,7 +6,7 @@
 
 Re-partitioning  is a straightforward but a *must-to-be-done-accurately* procedure. Mistakes may cost you a phone.
 
-**The micro-sdcard must be IN the phone!**
+**The micro-sdcard must be IN the phone!** if you **do not** want a la factory reset.
 
 **The new recovery must be installed!**
 
@@ -61,11 +61,15 @@ All modifications are in **memory**! It is safe, but **do not forget to write**,
 * **w** - write changes to disk, w/o this you will loose your efforts!
 * **q** -- quit
 
-Once created **and written** by issuing the command `w` INSIDE `gdisk` you **MUST** reboot. It is the only way to instruct the kernel to read new partition table. Do it from your pc (*not* from the shell) via
+Once created **and written** by issuing the command `w` INSIDE `gdisk` you **MUST** reboot. It is the only way to instruct the kernel to read new partition table. First, exit the shell
+```
+exit
+```
+Reboot your phone typing on your pc
 ```
 adb reboot recovery 
 ```
-After the reboot you are back to the recovery environment.
+After the reboot your phone is back to the recovery environment.
 
 #### Step 3. Formatting
 
@@ -96,13 +100,13 @@ Now exit the shell
 ```
 exit
 ```
-and then type on your pc
+and then reboot the phone normally by typing on your pc
 ```
 adb reboot
 ```
 After the reboot you either have your previous phone or will have to re-do all the initialization. This depends on whether you have backed-up files and restored them back or not.
 
-So to say: **DONE!**
+**DONE!**
 
 ---
 
