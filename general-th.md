@@ -67,11 +67,13 @@ This is another *feature* used by phone makers. The boot process goes in stages.
 
 The trick is that before `aboot` is called it is being checked using certificates written inside and computing the hash sum. If the check does not succeed the boot process halts.
 
-In the same manner `aboot` check `boot` or `recovery`. Chances are that `aboot` will just halt the phone if the bootable image does not pass the security checks.
+In the same manner `aboot` checks `boot` or `recovery`. Chances are that `aboot` will just halt the phone if the bootable image does not pass the security checks.
 
-This is a way more complicated problem to overcome than just become a `root`. The oddity is as follows. Once you have become the `root`, you may have chances to overwrite, say `boot` partition with your new lovely kernel, but this kernel may **not** be booted by `aboot` becuase its hash is wrong.
+This is a way more complicated problem to overcome than just become a `root`. The oddity is as follows. Once you have become the `root`, you may have chances to overwrite, say `boot` partition with your new lovely kernel, but this kernel may **not** be booted by `aboot` becuase its hash is wrong. As a result you cannot start your phone completely.
 
 This is not just a mistake, this with high probability will lead to the complete **brick** out of your phone. You therefore must be absolutely sure **before** altering bootable partitions, that this is in accord with possible lock mechanisms.
+
+Some people may think that *factory reset* may help but this is wrong! "Factory reset" in most cases assumes that `system`, `boot` and `recovery` (and of course all other system) partitions are given and are immutable. There is just **NO** second image for them inside. Usually "factory reset" only wipes what you, as a normal user, have done on your phone. Your programs, settings, files, etc. Be aware!
 
 ##### NAND-lock
 
