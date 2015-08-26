@@ -22,7 +22,7 @@ Thus the wish is to implement a fully independent and fully functional recovery.
 * **recovery/** - folder: the proper recovery image is there
 
 To install new recovery into its proper place, i.e. recovery partition, You download from the `recovery/` folder here into one folder on your pc:
-* `adbr.sh`
+* `adbr.sh (adbr.bat for windows)`
 * `flash_recovery.sh`
 * `run_root_shell`
 * `sgdisk`
@@ -39,6 +39,7 @@ sudo adb devices
 Then execute on your pc (you should be inside the folder where you have just downloaded the stuff)
 ```
 ./adbr.sh
+(adbr.bat for windows)
 ```
 As the result you will have a brand new recovery image to be booted with *vol-down+power* pressed.
 
