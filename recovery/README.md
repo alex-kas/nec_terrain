@@ -7,7 +7,7 @@ Images:
 * `kas.recovery.bin-vvv` - the recovery image version vvv
 
 Verification script:
-* `adbtestgpt.sh` - this script shows to you the GPT table. It is up to **YOU** to decide whether to proceed or not. You should consult [the prerequisits](exploit-pre.md) page to make the decision. The corenerstone is the gap between partitions 3 and 4
+* `adbtestgpt.sh` - this script shows to you the GPT table. It is up to **YOU** to decide whether to proceed or not. You should consult [the prerequisits](../exploit-pre.md) page to make the decision. The corenerstone is the gap between partitions 3 and 4
 ```
 Number  Start (sector)    End (sector)  Size       Code  Name
    3          425984          557055   64.0 MiB    FFFF  fatallog
