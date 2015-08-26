@@ -1,3 +1,9 @@
+### What can you find in this folder?
+
+* `adbfb.tar.gz` - `adb.exe` and drivers (show NEC Terrain as some Samsung phone) for windows (proven working in win7pro_x64)
+* `superuser.tar.gz` - contains `su` binary and `Superuser.apk`
+* `apk*` - contain program lists discussed below
+
 ### NEC Terrain system and its components
 
 I did some research and present here lists of apps which should be left in the system,
