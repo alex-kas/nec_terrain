@@ -28,7 +28,7 @@ To install new recovery into its proper place, i.e. recovery partition, You down
 * `sgdisk`
 * one of the `.bin` images. **IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc
 
-Check that `adbr.sh` script has permissions `755`. To be sure just issue on your pc inside the directory where all the stuff has been saved
+In linux check that `adbr.sh` script has permissions `755`. To be sure just issue on your pc inside the directory where all the stuff has been saved
 ```
 chmod 755 adbr.sh
 ```
