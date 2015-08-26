@@ -6,6 +6,15 @@ enforce a write-protection above linux permissions and privileges.
 Images:
 * `kas.recovery.bin-vvv` - the recovery image version vvv
 
+Verification script:
+* `adbtestgpt.sh` - this script shows to you the GPT table. It is up to **YOU** to decide whether to proceed or not. You should consult [the prerequisits](exploit-pre.md) page to make the decision. The corenerstone is the gap between partitions 3 and 4
+```
+Number  Start (sector)    End (sector)  Size       Code  Name
+   3          425984          557055   64.0 MiB    FFFF  fatallog
+   4          589824          590335   256.0 KiB   FFFF  sbl1
+```
+**EXACTLY** as written above (on a non-altered phone).
+
 Install script:
 * `adbr.sh` - script to be run on your computer to eventually flash the recovery image on a normally booted phone.
 
