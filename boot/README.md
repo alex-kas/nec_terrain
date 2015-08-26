@@ -3,6 +3,7 @@
 This boot image is made of a kernel extracted from the stock recovery and a modified original ramdisk from the boot image. This kernel does not
 enforce a write-protection above linux permissions and privileges.
 
+* `kas.boot.bin` - the boot image, latest version
 * `kas.boot.bin-vvv` - the boot image, version vvv
 * `build.prop` should be placed in the `/system`
 
