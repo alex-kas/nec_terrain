@@ -6,7 +6,7 @@ enforce a write-protection above linux permissions and privileges.
 * `kas.boot.bin-vvv` - the boot image, version vvv
 * `build.prop` should be placed in the `/system`
 
-* `adbb.sh` - script to place the boot image and build.prop in a special folder on the sd-card (`brnects0.715`) so that a script in recovery `/rbin/flash_boot.sh` can see them and write in place.
+* `adbb.sh (adbb.bat for windows)` - script to place the boot image and build.prop in a special folder on the sd-card (`brnects0.715`) so that a script in recovery `/rbin/flash_boot.sh` can see them and write in place.
 
 #### Changelog for the *image*:
 
