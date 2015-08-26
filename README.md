@@ -11,7 +11,7 @@ Read [here](fastroot.md)
 
 ### About the phone
 
-You can read [here](aboutnecterrain.md) about the phone, pros and cons including known (serious) bugs
+You can read [here](aboutnecterrainphone.md) about the phone, pros and cons including known (serious) bugs
 
 ### For those who wants freedom
 
