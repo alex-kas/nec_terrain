@@ -11,20 +11,24 @@ To install a new boot into its proper place, i.e. boot partition, you download f
 * `build.prop`
 * one of the the `.bin` images. **IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc.
 
-Check that `adbb.sh` has `755` permissions. Or simply issue from inside the directory where you have downloaded the files
+In linux check that `adbb.sh` has `755` permissions. To be sure simply issue from inside the directory where you have downloaded the files
 ```
 chmod 755 adbb.sh
 ```
 Your phone must be booted normally. The `adb` daemon must be started on your pc. To be sure in the latter issue, for instance
 ```
 sudo adb devices
+(adb start-server [for windows])
 ```
+**The microsd-card must be __in__ the phone.**
+
+
 Run on your pc (you should be inside the directory where you downloaded the files)
 ```
 ./adbb.sh
-(adbr.bat for windows)
+(adbr.bat [for windows])
 ```
-To copy files to a proper location on your sdcard (folder named `brnects0.715`), the card must be **in** the phone.
+To copy files to a proper location on your sdcard (folder named `brnects0.715`).
 
 **The new recovery must be installed!**
 
@@ -32,7 +36,7 @@ Now restart your phone into recovery typing on your pc
 ```
 adb reboot recovery
 ```
-Now go into shell
+Wait at least the 'NEC' logo. After the 'NEC' logo this recovery shows **NOTHING**. Now go into shell
 ```
 adb shell
 ```
