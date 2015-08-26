@@ -2,12 +2,10 @@ borqs.soundrecorder
 com.amazon.kindle
 com.android.DeviceHelp
 com.android.apps.tag
-com.android.att.settings.provider
 com.android.backupconfirm
 com.android.browser
 com.android.calculator2
 com.android.calendar
-com.android.chrome
 com.android.contacts.map
 com.android.deskclock
 com.android.email
@@ -15,7 +13,6 @@ com.android.facelock
 com.android.gallery3d
 com.android.htmlviewer
 com.android.magicsmoke
-com.android.mms
 com.android.music
 com.android.musicfx
 com.android.musicvis

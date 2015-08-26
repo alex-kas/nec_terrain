@@ -1,10 +1,13 @@
 android
+com.android.att.settings.provider
 com.android.bluetooth
 com.android.certinstaller
+com.android.chrome
 com.android.contacts
 com.android.defcontainer
 com.android.keychain
 com.android.launcher
+com.android.mms
 com.android.nfc
 com.android.nfchiddenmenu
 com.android.packageinstaller
