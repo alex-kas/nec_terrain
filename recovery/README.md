@@ -1,10 +1,11 @@
-### NEC Terrain boot image
+### NEC Terrain recovery image
 
 This recovery image is made of the original kernel used in the stock recovery and an amended original ramdisk. This kernel does not
 enforce a write-protection above linux permissions and privileges.
 
 Images:
-* `kas.recovery.bin-vvv` - the recovery image version vvv
+* `kas.recovery.bin` - the recovery image, latest version
+* `kas.recovery.bin-vvv` - the recovery image, version vvv
 
 Verification script:
 * `adbtestgpt.sh (adbtestgpt.bat for windows)` - this script shows to you the GPT table. It is up to **YOU** to decide whether to proceed or not. You should consult [the prerequisits](../exploit-pre.md) page to make the decision. The corenerstone is the gap between partitions 3 and 4
