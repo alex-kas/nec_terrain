@@ -28,18 +28,19 @@ To install new recovery into its proper place, i.e. recovery partition, You down
 * `sgdisk`
 * one of the `.bin` images. **IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc
 
-Check that `run_root_shell`, `sgdisk` and both `.sh` scripts have permissions `755`. Or just issue on your pc inside the directory where all the stuff has been saved
+Check that `adbr.sh` script has permissions `755`. To be sure just issue on your pc inside the directory where all the stuff has been saved
 ```
-chmod 755 run_root_shell sgdisk *.sh
+chmod 755 adbr.sh
 ```
 Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable. Start `adb` daemon for exmaple by
 ```
 sudo adb devices
+(adb start-server [for windows])
 ```
 Then execute on your pc (you should be inside the folder where you have just downloaded the stuff)
 ```
 ./adbr.sh
-(adbr.bat for windows)
+(adbr.bat [for windows])
 ```
 As the result you will have a brand new recovery image to be booted with *vol-down+power* pressed.
 
