@@ -7,7 +7,7 @@
 * **boot/** - folder: the images are there
 
 To install a new boot into its proper place, i.e. boot partition, you download from the `boot/` folder here to some place on your pc:
-* `adbb.sh`
+* `adbb.sh (adbb.bat for windows)`
 * `build.prop`
 * one of the the `.bin` images. **IMPORTANT:** whatever image you download you **must** save it under the name `kas.boot.bin` locally on your pc.
 
@@ -22,6 +22,7 @@ sudo adb devices
 Run on your pc (you should be inside the directory where you downloaded the files)
 ```
 ./adbb.sh
+(adbr.bat for windows)
 ```
 To copy files to a proper location on your sdcard (folder named `brnects0.715`), the card must be **in** the phone.
 
