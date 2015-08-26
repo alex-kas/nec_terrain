@@ -7,7 +7,7 @@ Images:
 * `kas.recovery.bin-vvv` - the recovery image version vvv
 
 Verification script:
-* `adbtestgpt.sh` - this script shows to you the GPT table. It is up to **YOU** to decide whether to proceed or not. You should consult [the prerequisits](../exploit-pre.md) page to make the decision. The corenerstone is the gap between partitions 3 and 4
+* `adbtestgpt.sh (adbtestgpt.bat for windows)` - this script shows to you the GPT table. It is up to **YOU** to decide whether to proceed or not. You should consult [the prerequisits](../exploit-pre.md) page to make the decision. The corenerstone is the gap between partitions 3 and 4
 ```
 Number  Start (sector)    End (sector)  Size       Code  Name
    3          425984          557055   64.0 MiB    FFFF  fatallog
@@ -16,7 +16,7 @@ Number  Start (sector)    End (sector)  Size       Code  Name
 **EXACTLY** as written above (on a non-altered phone).
 
 Install script:
-* `adbr.sh` - script to be run on your computer to eventually flash the recovery image on a normally booted phone.
+* `adbr.sh (adbr.bat for windows)` - script to be run on your computer to eventually flash the recovery image on a normally booted phone.
 
 Required binaries and scripts for the install:
 * `run_root_shell` is used to flash this image on a non-rooted NEC Terrain
