@@ -4,7 +4,7 @@
 
 ### Placing `su` and `Superuser.apk`
 
-You can get `su` and `Superuser.apk` from the **system/** folder here. Then, in order to install them properly do the following commands. Ensure that your `adb` daemon is running bu issuing
+You can get `su` and `Superuser.apk` from the **system/** folder here. File `superuser.tar.gz`, to be unpacked. Then, in order to install them properly do the following commands. Ensure that your `adb` daemon is running bu issuing
 ```
 sudo adb devices
 ```
