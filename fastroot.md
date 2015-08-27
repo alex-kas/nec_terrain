@@ -18,6 +18,37 @@ From folder `boot/` in this repository
 * `build.prop`
 * `kas.boot.bin`
 
+From folder `system/` in this repository
+
+* `superuser.tar.gz`
+
+#### Micro-sd card
+
+You need a micro-sd card to be in the phone. It should have few gigabytes of space and be formatted as an mbr with a partition.
+
+In linux this means that the card is seen as
+```
+/dev/mmcblk0
+```
+and its partition as
+```
+/dev/mmcblk0p1
+```
+In simpler words, if you examine your SD card in `disks` utility on your pc you should see:
+```
+Partitioning: Master Boot Record
+Device: /dev/mmcblk0p1
+Contents: vfat
+```
+
+In windows this means that when you see the inserted sd-card and analyse its properties the corresponding window in the tab `Volumes` says
+```
+Partition style MBR
+```
+and shows one volume.
+
+The partition (volume) must be formatted as `vfat`
+
 #### Pre-test
 
 In linux check that `adbtestgpt.sh` has permissions 755. To be sure just issue on your pc inside the directory
@@ -25,7 +56,8 @@ where all the stuff has been saved
 ```
 chmod 755 adbtestgpt.sh
 ```
-Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable.
+Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable. In linux **NO** driver needed. Driver (working in win7pro_x64) and `adb.exe` can be found in `system/` folder in this repository, file `adbfb.tar.gz`.
+
 Start `adb` daemon for exmaple by
 ```
 sudo adb devices
@@ -99,5 +131,37 @@ adb reboot
 ```
 The very new boot image is here!
 
+#### Re-partitioning
 
+Sorry, no short instruction yet.
 
+#### Placing `su` and `Superuser.apk`
+
+First unpack `superuser.tar.gz`
+
+Boot the phone into the recovery mode by pressing *vol-down+power*. From the directory where you have downloaded the suepruser stuff do
+```
+adb push su /tmp
+adb push Superuser.apk /tmp
+adb shell
+```
+Now you are in the adb shell. Do there
+```
+cd /tmp
+mount /dev/block/mmcblk0p12 /system
+cp su /system/xbin/su
+chown 0:0 /system/xbin/su
+chmod 6755 /system/xbin/su
+ln -s /system/xbin/su /system/bin/su
+cp Superuser.apk /system/app
+chmod 644 /system/app/Superuser.apk
+umount /system
+exit
+```
+Now you are back to your pc. Reboot the phone by
+```
+adb reboot
+```
+After the reboot you will see "Android is upgrading" meaning it installs a new 'system' program Superuser.apk
+
+**DONE! Your phone is rooted!**
