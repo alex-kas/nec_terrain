@@ -1,9 +1,10 @@
 ### Fast root guide for NEC Terrain
 
 For those not common with adb/linux/etc:
-* ALL commands are typed on your pc
+* ALL commands are typed on your pc in terminal (`cmd` shell in windows)
 * One line - one command
 * You type (or copy) a command, press `enter`, wait the result and the new prompt
+* after a command execution you see its output, it should be positive or neutral. If you see somewhat like "file not found", "command not found", "cannot ...", etc this most likely inidcates a mistake in your command, absence of vital files, or other oddity
 * capital and literal letters are DIFFERENT
 * NO unneeded symbols (well in some places I put a second command, for windows; hope it is understandable, what is exactly meant there)
 
@@ -17,7 +18,7 @@ From folder `recovery/` in this repository:
 * `flash_recovery.sh`
 * `run_root_shell`
 * `sgdisk`
-* `kas.boot.bin`
+* `kas.recovery.bin`
 
 From folder `boot/` in this repository:
 
@@ -63,7 +64,7 @@ where all the stuff has been saved
 ```
 chmod 755 adbtestgpt.sh
 ```
-Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable. In linux **NO** driver needed. For windows, driver (working in win7pro_x64) and `adb.exe` can be found in `system/` folder in this repository, file `adbfb.tar.gz`.
+Now boot your phone normally, into its canonical stock boot configuration. Connect the usb cable. In linux **NO** driver needed. For windows, driver (working in win7pro_x64) and `adb.exe` can be found in `system/` folder in this repository, file `adbfb.tar.gz`.
 Also 'USB debugging' must be turned on in the phone.
 
 Start `adb` daemon for exmaple by
@@ -116,7 +117,7 @@ Run on your pc
 ```
 To copy files to a proper location on your sdcard (folder named `brnects0.715`).
 
-Now restart your phone into recovery typing on your pc
+Now restart your phone into *recovery* typing on your pc
 ```
 adb reboot recovery
 ```
@@ -147,7 +148,7 @@ Sorry, no short instruction yet.
 
 First unpack `superuser.tar.gz`
 
-Boot the phone into the recovery mode by pressing *vol-down+power*. From the directory where you have downloaded the suepruser stuff do
+Boot the phone into the *recovery* mode by pressing *vol-down+power*. From the directory where you have downloaded the suepruser stuff do
 ```
 adb push su /tmp
 adb push Superuser.apk /tmp
