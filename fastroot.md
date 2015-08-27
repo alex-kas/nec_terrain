@@ -1,10 +1,17 @@
 ### Fast root guide for NEC Terrain
 
+For those not common with adb/linux/etc:
+* ALL commands are typed on your pc
+* One line - one command
+* You type (or copy) a command, press `enter`, wait the result and the new prompt
+* capital and literal letters are DIFFERENT
+* NO unneeded symbols (well in some places I put a second command, for windows; hope it is understandable, what is exactly meant there)
+
 #### Downloads
 
 You preferably download everything to one directory on your pc
 
-From folder `recovery` in this repository:
+From folder `recovery/` in this repository:
 * `adbtestgpt.sh (adbtestgpt.bat for windows)`
 * `adbr.sh (adbr.bat for windows)`
 * `flash_recovery.sh`
@@ -12,13 +19,13 @@ From folder `recovery` in this repository:
 * `sgdisk`
 * `kas.boot.bin`
 
-From folder `boot/` in this repository
+From folder `boot/` in this repository:
 
 * `adbb.sh (adbb.bat for windows)`
 * `build.prop`
 * `kas.boot.bin`
 
-From folder `system/` in this repository
+From folder `system/` in this repository:
 
 * `superuser.tar.gz`
 
@@ -56,14 +63,15 @@ where all the stuff has been saved
 ```
 chmod 755 adbtestgpt.sh
 ```
-Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable. In linux **NO** driver needed. Driver (working in win7pro_x64) and `adb.exe` can be found in `system/` folder in this repository, file `adbfb.tar.gz`.
+Now boot your phone normally, into its canonical stock boot configuration. Connect usb cable. In linux **NO** driver needed. For windows, driver (working in win7pro_x64) and `adb.exe` can be found in `system/` folder in this repository, file `adbfb.tar.gz`.
+Also 'USB debugging' must be turned on in the phone.
 
 Start `adb` daemon for exmaple by
 ```
 sudo adb devices
 (adb start-server [for windows])
 ```
-and run the script
+and run the script (you should be inside the folder where you have just downloaded the stuff)
 ```
 ./adbtestgpt.sh
 (adbtestgpt.bat [for windows])
@@ -74,7 +82,7 @@ Number  Start (sector)    End (sector)  Size       Code  Name
    3          425984          557055   64.0 MiB    FFFF  fatallog
    4          589824          590335   256.0 KiB   FFFF  sbl1
 ```
-EXACTLY as written above (on a non-altered phone).
+it should be **ABSOLUTELY EXACTLY** as written above (on a non-altered phone).
 
 **The script does not take decisions. It is you, who compares and decides what to do!**
 
@@ -86,7 +94,7 @@ In linux check that `adbr.sh` script has permissions `755`. To be sure just issu
 ```
 chmod 755 adbr.sh
 ```
-Run the script (you should be inside the folder where you have just downloaded the stuff)
+Run the script
 ```
 ./adbr.sh
 (adbr.bat [for windows])
@@ -101,7 +109,7 @@ chmod 755 adbb.sh
 ```
 **The microsd-card must be __in__ the phone.**
 
-Run on your pc (you should be inside the directory where you downloaded the files)
+Run on your pc
 ```
 ./adbb.sh
 (adbr.bat [for windows])
@@ -112,7 +120,7 @@ Now restart your phone into recovery typing on your pc
 ```
 adb reboot recovery
 ```
-Wait at least the 'NEC' logo. After the 'NEC' logo this recovery shows **NOTHING**. Now go into shell
+Wait at least the 'NEC' logo. After the 'NEC' logo this recovery shows **NOTHING**. Now go into shell (we will continue typing on the pc, of course, but virtually we will be in the phone)
 ```
 adb shell
 ```
