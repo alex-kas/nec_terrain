@@ -98,7 +98,7 @@ chmod 755 adbr.sh
 Run the script
 ```
 ./adbr.sh
-(adbr.bat [for windows])
+(adbb.bat [for windows])
 ```
 The very new recovery is ready to use!
 
