@@ -98,7 +98,7 @@ chmod 755 adbr.sh
 Run the script
 ```
 ./adbr.sh
-(adbb.bat [for windows])
+(adbr.bat [for windows])
 ```
 The very new recovery is ready to use!
 
@@ -113,7 +113,7 @@ chmod 755 adbb.sh
 Run on your pc
 ```
 ./adbb.sh
-(adbr.bat [for windows])
+(adbb.bat [for windows])
 ```
 To copy files to a proper location on your sdcard (folder named `brnects0.715`).
 
