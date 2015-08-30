@@ -4,32 +4,33 @@
 
 ### Placing `su` and `Superuser.apk`
 
-You can get `su` and `Superuser.apk` from the **system/** folder here. File `superuser.tar.gz`, to be unpacked. Then, in order to install them properly do the following commands. Ensure that your `adb` daemon is running bu issuing
+* **system/** - folder: the relevant files are there
+
+You download from the `system/` folder here to some place on your pc:
+* `adbs.sh (adbs.bat for windows)`
+* `su`
+* `Superuser.apk`
+
+Ensure that your `adb` daemon is running bu issuing
 ```
 sudo adb devices
 ```
 **The new recovery must be installed!**
 
-Boot the phone into the recovery mode by pressing *vol-down+power*. From the directory where you have downloaded the suepruser stuff do
+In linux check that `adbs.sh` has 755 permissions. To be sure simply issue from inside the directory where you have downloaded the files
 ```
-adb push su /tmp
-adb push Superuser.apk /tmp
-adb shell
+chmod 755 adbs.sh
 ```
-Now you are in the adb shell. Do there
+Now restart your phone into recovery typing on your pc
 ```
-cd /tmp
-mount /dev/block/mmcblk0p12 /system
-cp su /system/xbin/su
-chown 0:0 /system/xbin/su
-chmod 6755 /system/xbin/su
-ln -s /system/xbin/su /system/bin/su
-cp Superuser.apk /system/app
-chmod 644 /system/app/Superuser.apk
-umount /system
-exit
+adb reboot recovery
 ```
-Now you are back to your pc. Reboot the phone by
+From the directory where you have downloaded the suepruser stuff do
+```
+./adbs.sh
+(adbs.bat [for windows])
+```
+Once done, reboot the phone by
 ```
 adb reboot
 ```
