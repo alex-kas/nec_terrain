@@ -158,7 +158,7 @@ In linux check that `adbs.sh` has `755` permissions. To be sure simply issue fro
 ```
 chmod 755 adbs.sh
 ```
-Now restart your phone into recovery typing on your pc
+Now restart your phone into *recovery* typing on your pc
 ```
 adb reboot recovery
 ```
