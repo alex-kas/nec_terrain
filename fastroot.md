@@ -28,7 +28,9 @@ From folder `boot/` in this repository:
 
 From folder `system/` in this repository:
 
-* `superuser.tar.gz`
+* `adbs.sh (adbs.bat for windows)`
+* `su`
+* `Superuser.apk`
 
 #### Micro-sd card
 
@@ -104,6 +106,8 @@ The very new recovery is ready to use!
 
 #### New boot
 
+**The new recovery MUST be installed!**
+
 In linux check that `adbb.sh` has `755` permissions. To be sure simply issue from inside the directory where you have downloaded the files
 ```
 chmod 755 adbb.sh
@@ -142,32 +146,25 @@ The very new boot image is here!
 
 #### Re-partitioning
 
+**The new recovery MUST be installed!**
+
 Sorry, no short instruction yet.
 
 #### Placing `su` and `Superuser.apk`
 
-First unpack `superuser.tar.gz`
+**The new recovery MUST be installed!**
+
+In linux check that `adbs.sh` has `755` permissions. To be sure simply issue from inside the directory where you have downloaded the files
+```
+chmod 755 adbs.sh
+```
 
 Boot the phone into the *recovery* mode by pressing *vol-down+power*. From the directory where you have downloaded the suepruser stuff do
 ```
-adb push su /tmp
-adb push Superuser.apk /tmp
-adb shell
+./adbs.sh
+(adbs.bat [for windows])
 ```
-Now you are in the adb shell. Do there
-```
-cd /tmp
-mount /dev/block/mmcblk0p12 /system
-cp su /system/xbin/su
-chown 0:0 /system/xbin/su
-chmod 6755 /system/xbin/su
-ln -s /system/xbin/su /system/bin/su
-cp Superuser.apk /system/app
-chmod 644 /system/app/Superuser.apk
-umount /system
-exit
-```
-Now you are back to your pc. Reboot the phone by
+Once done, reboot the phone by
 ```
 adb reboot
 ```
