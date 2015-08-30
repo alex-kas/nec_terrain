@@ -158,8 +158,11 @@ In linux check that `adbs.sh` has `755` permissions. To be sure simply issue fro
 ```
 chmod 755 adbs.sh
 ```
-
-Boot the phone into the *recovery* mode by pressing *vol-down+power*. From the directory where you have downloaded the suepruser stuff do
+Now restart your phone into recovery typing on your pc
+```
+adb reboot recovery
+```
+From the directory where you have downloaded the suepruser stuff do
 ```
 ./adbs.sh
 (adbs.bat [for windows])
