@@ -151,29 +151,23 @@ Sorry, пока короткой инструкции нет.
 
 #### Установка `su` и `Superuser.apk`
 
-Для начала разархивируйте `superuser.tar.gz`
+**Новый образ recovery ДОЛЖЕН быть установлен!**
 
-Загрузите телефон в режим  *recovery* нажимай при старте *vol-down+power*. 
-Выполните на компьютере из директории, куда все загружалось, следующие команды
+В linux проверьте, что `adbs.sh` имеет код доступа `755`. Чтобы быть уверенным в этом, просто выполните команду
+(будучи в директории, куда все сохранялось при загрузке)
 ```
-adb push su /tmp
-adb push Superuser.apk /tmp
-adb shell
+chmod 755 adbs.sh
 ```
-последняя клманда перевела Вас в оболочку adb. Продолжайте внутри оболочки:
+Перезапустите телефон в режиме *recovery*, набрав на своем компьютере
 ```
-cd /tmp
-mount /dev/block/mmcblk0p12 /system
-cp su /system/xbin/su
-chown 0:0 /system/xbin/su
-chmod 6755 /system/xbin/su
-ln -s /system/xbin/su /system/bin/su
-cp Superuser.apk /system/app
-chmod 644 /system/app/Superuser.apk
-umount /system
-exit
+adb reboot recovery
 ```
-Последняя команда вывела Вас из оболочки. Перезагружайте телефон, набирая на компьютере
+Запустите на своем компьютере, находясь в директории, куда все скачено
+```
+./adbs.sh
+(adbs.bat [для windows])
+```
+По завершении перезагружайте телефон, набирая на компьютере
 ```
 adb reboot
 ```
