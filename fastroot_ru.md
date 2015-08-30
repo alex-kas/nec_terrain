@@ -28,7 +28,9 @@
 
 Из папки `system/` здесь на github:
 
-* `superuser.tar.gz`
+* `adbs.sh (adbs.bat для windows)`
+* `su`
+* `Superuser.apk`
 
 #### Карта micro-sd
 
