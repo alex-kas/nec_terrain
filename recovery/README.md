@@ -26,6 +26,10 @@ Required binaries and scripts for the install:
 
 #### Changelog for the *image*:
 
+* **version 0.9.2** (`kas.recovery.bin-0.9`)
+  * ramdisk/rbin/redo_data5GROW128.sh script re-creates `userdata` to be 5GiB and `GROW` to be 128MiB
+  * ramdisk/rbin/format_dataGROW.sh script formats `userdata` to ext4 with optimizing options and `GROW` to vfat
+
 * **version 0.9** (`kas.recovery.bin-0.9`)
   * ramdisk/rbin/flash_boot.sh modified such that now it places build.prop automatically
 
