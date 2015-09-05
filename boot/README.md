@@ -5,7 +5,7 @@ enforce a write-protection above linux permissions and privileges.
 
 * `kas.boot.bin` - the boot image, latest version
 * `kas.boot.bin-vvv` - the boot image, version vvv
-* `kas.boot.bin-vvv-ext2` - the _experimental_ boot image, version vvv, which mounts **both** `system` and `userdata` partitions as **ext2** They **MUST** be reformatted as such in the recovery!
+* `kas.boot.bin-vvv-ext2` - the _experimental_ boot image, version vvv, which mounts **both** `system` and `userdata` partitions as **ext2** They **MUST** be reformatted as such in the recovery! This is a workaround for random reboots. Read http://forum.xda-developers.com/showpost.php?p=62673224&postcount=25
 * `build.prop` should be placed in the `/system`
 
 * `adbb.sh (adbb.bat for windows)` - script to place the boot image and build.prop in a special folder on the sd-card (`brnects0.715`) so that a script in recovery `/rbin/flash_boot.sh` can see them and write in place.
@@ -13,7 +13,7 @@ enforce a write-protection above linux permissions and privileges.
 #### Changelog for the *image*:
 
 * **version 0.9-ext2** (`kas.boot.bin-0.9-ext2`)
-  * mounts **both** `system` and `userdata` partitions as **ext2** They **MUST** be reformatted as such in the recovery!
+  * mounts **both** `system` and `userdata` partitions as **ext2** They **MUST** be reformatted as such in the recovery! This is a workaround for random reboots. Read http://forum.xda-developers.com/showpost.php?p=62673224&postcount=25
 
 * **version 0.9** (`kas.boot.bin-0.9`)
   * service flash_recovery is commented out to prevent a possible FOTA action
