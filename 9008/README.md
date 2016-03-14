@@ -10,9 +10,9 @@
 
 #### 9008 explained
 
-This is the mode in which the external usb port of your phone is enumerated as `05c6:9008` and is recognized a serial port, i.e. TTYn (COMn in windows). This happens if you so much messed up your phone that it cannot reach boot or recovery partitions. For example, erased aboot ... In this case your phone upon pressing power button shows you _NOTHING_. However, it is very likely still alive.
+This is the mode in which the external usb port of your phone is enumerated as `05c6:9008` and is recognized as a serial port, i.e. ttySn (COMn in windows). This happens if you so much messed up your phone that it cannot reach boot or recovery partitions. For example, erased aboot ... In this case your phone upon pressing power button shows you _NOTHING_. However, it is very likely still alive.
 
-Now upon connection to your computer via usb you see _NOTHING_. You must activate the 9008 mode which is indeed your **LAST** chance. But this chance is quite steady and patient. In this mode you can reload the content of your internal flash by means of a simple script under linux. (In windows you must use special drivers and the QPST suite.) Note that your linux kernel must support serial TTY through usb.
+Now upon connection to your computer via usb you see _NOTHING_. You must activate the 9008 mode which is indeed your **LAST** chance. But this chance is quite steady and patient. In this mode you can reload the content of your internal flash by means of a simple script under linux. (In windows you must use special drivers `qs9008.tar.gz` and the QPST suite. Ask me in private or google if you need QPST.) Note that your linux kernel must support serial tty (ttyS) through usb.
 
 Another situation when this mode can be useful is when you messed up your system not heavily but enough to say bye to your phone. For example, it boots but then enters some bootloop and unfortunately you did not install some normal (e.g. mine in case of NEC Terrain) recovery. Then you might need to rewrite the whole system folder or just update recovery without being able to boot. Your savior is the 9008 mode.
 
@@ -22,21 +22,21 @@ All referred files are in this folder.
 
 * Remove the battery and the usb cable from the phone
 * Glue off the sticker with your IMEI
-* Observe a group of 4 contacts. The 2 in the middle are named GND and ENG_BOOT (from engineering), see `photo1.jpg` and `photo2.jpg`
+* Observe a group of 4 contacts (`photo1.jpg`, encircled by the red contour). The 2 in the middle are named GND and ENG_BOOT from ground and engineering_boot respectively (`photo2.jpg`, shown by red arrows)
 * Connect you phone in this state (w/o a battery) to your computer
-* Check with `lsusb` that it is _not_ seen, just in case
+* Check with `lsusb` that it is _not_ seen, it should be like that
 * Shorten for some short time GND and ENG_BOOT contacts, a tweezer from the Swiss army knife is enough.
 * Check with `lsusb` that it is **seen** as `05c6:9008`; if not, repeat the previous step more carefully
-* Notice that touching neighbour contacts seem to have no effect (including no harm)
-* Also you **must not** keep contacts shortened and you **must not** insert battery.
+* Notice that touching neighbour contacts seem to have no effect (including no harm), I tried
+* Also you **must not** keep contacts shortened and you **must not** insert the battery.
 
 My credits about shortening the contacts in question go to VANOLEO from xda. Thanks, dude!
 
 You just have proven your phone is **ALIVE!**
 
-Notice 1: if you do not see any connection, then your phone is indeed dead, sorry, my condolenses.
+Notice 1: if you do not see any connection, then your phone is indeed dead, sorry, my condolences.
 
-Notice 2: 9008 mode can be activated on a healthy phone as well.
+Notice 2: 9008 mode can be activated on a healthy phone as well, just in case.
 
 #### Stage 1
 
@@ -54,15 +54,15 @@ It must be under root, `-v` is for the verbosity (you can omit). If no errors, y
 
 #### Stage 2
 
-It is a bit more tricky. You are now ready to write to the internal flash. I took the initial scipt from Droid Ultra unbrick thread by VBlack on xda, so I preserved his strategy.
+It is a bit more tricky. You are now ready to write to the internal flash. I took the initial script from Droid Ultra unbrick thread by VBlack on xda, so I preserved his strategy. That is rewriting on a by-partition basis. You specify partitions to rewrite and supply their images.
 
-You must have a file which is the partition table of your phone as position of partitions is vital for the script in question. But you cannot get this file as your phone is dead. So, you must assume one from a working identical phone around, from another person, from here for instance (`gpt.txt`), or from whatever. No help here, sorry.
+Thus you must have a file which is the partition table of your phone as position of partitions is vital for the script in question. But you cannot get this file as your phone is dead. So, you must assume one from a working identical phone around, from another person, from here for instance (`gpt.txt`), or from whatever. No more specific help here, sorry.
 
 What is the **MOST** important, you **MUST** understand what you want to rewrite. In my case I killed `aboot` experimenting with a new kernel and had to rewrite `aboot`. For a friend of mine I have rewritten `recovery` to save the system folder after. As the rule of thumb:
 
 **You can assume that if you are not me, you have altered your phone only by my instructions (or terroot written after my method) and therefore partitions are either in their original state (of you did not touch your phone) or where they should be after my guides.**
 
-Therefore, the `gpt.txt` found in this folder is quite nice to locate most vital partitions (for this gpt `recovery` partition is as it is _after_ rooting by my guides). If ever needed, you will rewrite some of `sbl1,2,3`, `aboot`, `tz`, `rpm` or `recovery`, I think.
+Therefore, the `gpt.txt` found in this folder is quite nice to locate most vital partitions (for this gpt `recovery` partition is as it is _after_ rooting by my guides or equivalently by terroot). If ever needed, you will rewrite some of `sbl1,2,3`, `aboot`, `tz`, `rpm` or `recovery`, I think.
 
 If you have your partition table in a form of binary file, you can make a text table by means of `gpt_parser.py`
 
@@ -70,11 +70,11 @@ In `gpt.txt` the first column is the offset of partitions in bytes, second is na
 
 **!!!YOU DO NOT EVEN THINK TO TOUCH PARTITIONS `modemst1` and `modemst2` BY ANY MEANS!!!**
 
-Once you understand what exactly you are going to change you edit the script `stage2.py`. You find the definition
+Once you understand what exactly you are going to change you edit the script `stage2.py`. You find the definition (line 42)
 ```
 BOOT_PARTITIONS = ("recovery",)
 ```
-and change `recovery` to the partition name you want to rewrite. Name must appear **EXACTLY** as it is in the partition table file. If you want to rewrite only one partition, you **keep** the comma after, it is correct. If you want to rewrite more than one partition at once, you act like in the commented line in the script file just above. For example
+and change `recovery` to the partition name you want to rewrite. Name must appear **EXACTLY** as it is in the partition table file. If you want to rewrite only one partition, you **keep** the comma after, it is correct. If you want to rewrite more than one partition at once, you act like in the commented line in the script file just above (see line 41). For example
 ```
 BOOT_PARTITIONS = ("recovery","aboot")
 ```
@@ -90,7 +90,7 @@ sudo ./stage2.py -v -ptf gpt.txt
 ```
 Again, under root, `-v` for the verbosity and can be skipped, `-ptf` - option to specify the partition table file. Be careful, `-pt` is reserved to indicate that partition table itself must be rewritten. As said before, I did not explore this functionality to details.
 
-If the script exits quickly mentioning errors, it means, you waited to few after the stage 1. It may also say that the phone is in stage 1 yet, so just go back and excute the stage 1 command. However, if there are indeed errors the serial modem will be reset. In this case you have to
+If the script exits quickly mentioning errors, it means, you waited to few after the stage 1. It may also say that the phone is in stage 1 yet, so just go back and execute the stage 1 command. However, if there are indeed errors the serial modem will be reset. In this case you have to
 * check with `lsusb` that the connection has gone (no `05c6:9008` device)
 * shorten again GND and ENG_BOOT
 * check that connection has reestablished and go to stage 1 command
