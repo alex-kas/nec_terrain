@@ -1,5 +1,7 @@
 ### NEC Terrain 9008 guide
 
+[Здесь](README_ru.md) написано по-русски.
+
 **GUYS, IT IS IF you have bricked your phone in a soft way, i.e. without dropping from the window of some 10th floor**
 
 **This is COOL and courageous, but not difficult**
